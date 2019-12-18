@@ -9,3 +9,7 @@ Controller::Controller() {
 Controller::~Controller() {
 
 }
+
+void Controller::Think(void) {
+
+}

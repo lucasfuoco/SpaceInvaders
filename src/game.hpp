@@ -11,6 +11,7 @@
 #include <sprites/player.hpp>
 #include <sprites/player_bullet.hpp>
 #include <sprites/text.hpp>
+#include <controllers/saucer_controller.hpp>
 #include <sprite.hpp>
 #include <shaders.hpp>
 
@@ -18,6 +19,7 @@
 
 namespace SpaceInvaders {
 	using namespace SpaceInvaders::Sprites;
+	using namespace SpaceInvaders::Controllers;
 
 	class Sprite;
 
@@ -64,5 +66,6 @@ namespace SpaceInvaders {
 		Buffer* buffer;
 		GLuint texture;
 		GLuint vertex;
+		SaucerController saucerController;
 	};
 }

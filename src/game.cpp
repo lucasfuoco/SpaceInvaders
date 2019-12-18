@@ -17,7 +17,8 @@ Game::Game(Shaders* shaders) :
 	scoreBuffer(),
 	buffer(new Buffer()),
 	texture(),
-	vertex()
+	vertex(),
+	saucerController()
 {
 	buffer->size.setWidth(224);
 	buffer->size.setHeight(256);
@@ -172,6 +173,9 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 		player->Reload();
 	}
+
+	// Controllers
+	saucerController.Think();
 
 	spriteShaderProgram->release();
 }

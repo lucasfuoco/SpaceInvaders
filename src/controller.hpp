@@ -6,5 +6,6 @@ namespace SpaceInvaders {
 	public:
 		Controller();
 		virtual ~Controller();
+		virtual void Think(void);
 	};
 }

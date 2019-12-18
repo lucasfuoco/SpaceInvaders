@@ -52,7 +52,7 @@ namespace SpaceInvaders {
 		);
 
 		QOpenGLShaderProgram* spriteShaderProgram;
-		std::vector<SpaceInvaders::Sprites::Saucer*> saucers;
+		std::vector<SpaceInvaders::Sprites::Saucer*>* saucers;
 		std::vector<SpaceInvaders::Sprites::PlayerBullet*> playerBullets;
 		SpaceInvaders::Sprites::Player* player;
 		SpaceInvaders::Sprites::Text* scoreText;

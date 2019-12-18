@@ -4,7 +4,7 @@ using namespace SpaceInvaders;
 
 Game::Game(Shaders* shaders) :
 	spriteShaderProgram(shaders->GetSprite()),
-	saucers(),
+	saucers(new std::vector<SpaceInvaders::Sprites::Saucer*>()),
 	playerBullets(),
 	player(new SpaceInvaders::Sprites::Player()),
 	scoreText(new SpaceInvaders::Sprites::Text()),
@@ -27,21 +27,21 @@ Game::Game(Shaders* shaders) :
 		for (int xIndex = 0; xIndex < 11; ++xIndex) {
 			switch (((5 - yIndex) / 2) + 1) {
 			case SaucerTypes::Saucer1:
-				saucers.push_back(new SpaceInvaders::Sprites::Saucers::Saucer1());
+				saucers->push_back(new SpaceInvaders::Sprites::Saucers::Saucer1());
 				break;
 			case SaucerTypes::Saucer2:
-				saucers.push_back(new SpaceInvaders::Sprites::Saucers::Saucer2());
+				saucers->push_back(new SpaceInvaders::Sprites::Saucers::Saucer2());
 				break;
 			case SaucerTypes::Saucer3:
-				saucers.push_back(new SpaceInvaders::Sprites::Saucers::Saucer3());
+				saucers->push_back(new SpaceInvaders::Sprites::Saucers::Saucer3());
 				break;
 			default:
-				saucers.push_back(new SpaceInvaders::Sprites::Saucers::Saucer1());
+				saucers->push_back(new SpaceInvaders::Sprites::Saucers::Saucer1());
 				break;
 			}
 	
-			saucers[yIndex * 11 + xIndex]->SetX(16 * xIndex + 20);
-			saucers[yIndex * 11 + xIndex]->SetY(17 * yIndex + 128);
+			saucers->at(yIndex * 11 + xIndex)->SetX(16 * xIndex + 20);
+			saucers->at(yIndex * 11 + xIndex)->SetY(17 * yIndex + 128);
 		}
 	}
 
@@ -68,8 +68,8 @@ Game::Game(Shaders* shaders) :
 }
 
 Game::~Game() {
-	for (int i = 0; i < saucers.size(); i++) {
-		delete saucers[i];
+	for (int i = 0; i < saucers->size(); i++) {
+		delete saucers->at(i);
 	}
 
 	for (int i = 0; i < playerBullets.size(); i++) {
@@ -80,6 +80,7 @@ Game::~Game() {
 	delete scoreText;
 	delete player;
 	delete buffer;
+	delete saucers;
 }
 
 void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
@@ -97,12 +98,12 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	player->UpdateSpriteBuffer(buffer);
 
 	// Saucers
-	for (int i = 0; i < saucers.size(); i++) {
+	for (int i = 0; i < saucers->size(); i++) {
 		if (!deathCounters[i]) {
 			continue;
 		}
 
-		saucers[i]->UpdateSpriteBuffer(buffer);
+		saucers->at(i)->UpdateSpriteBuffer(buffer);
 	}
 
 	// Bullets
@@ -121,7 +122,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 	// Simulate saucers
 	for (int saucerIndex = 0; saucerIndex < saucerCount; ++saucerIndex) {
-		if (saucers[saucerIndex]->GetIsDead() && deathCounters[saucerIndex]) {
+		if (saucers->at(saucerIndex)->GetIsDead() && deathCounters[saucerIndex]) {
 			deathCounters[saucerIndex] -= 1;
 		}
 	}
@@ -139,12 +140,12 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 		// Check if saucers are hit
 		for (int saucerIndex = 0; saucerIndex < saucerCount; ++saucerIndex) {
-			if (saucers[saucerIndex]->GetIsDead()) {
+			if (saucers->at(saucerIndex)->GetIsDead()) {
 				continue;
 			}
 
-			if (getSpritesAreOverlaping(playerBullets[bulletIndex], saucers[saucerIndex])) {
-				score += saucers[saucerIndex]->GetDeathPoint();
+			if (getSpritesAreOverlaping(playerBullets[bulletIndex], saucers->at(saucerIndex))) {
+				score += saucers->at(saucerIndex)->GetDeathPoint();
 				sprintf(
 					scoreBuffer,
 					"%i",
@@ -152,7 +153,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 				);
 				scoreValueText->SetText(scoreBuffer);
 
-				saucers[saucerIndex]->Die();
+				saucers->at(saucerIndex)->Die();
 
 				playerBullets[bulletIndex]->ResetPosition();
 				std::rotate(playerBullets.begin() + bulletIndex, playerBullets.begin() + bulletIndex + 1, playerBullets.end());
@@ -209,8 +210,8 @@ void Game::OnGLInitialized(QOpenGLExtraFunctions* openGL) {
 
 void Game::Cleanup(QOpenGLExtraFunctions* openGL) {
 	player->Cleanup(openGL);
-	for (int i = 0; i < saucers.size(); i++) {
-		saucers[i]->Cleanup(openGL);
+	for (int i = 0; i < saucers->size(); i++) {
+		saucers->at(i)->Cleanup(openGL);
 	}
 
 	for (int i = 0; i < playerBullets.size(); i++) {
@@ -219,18 +220,20 @@ void Game::Cleanup(QOpenGLExtraFunctions* openGL) {
 
 	openGL->glDeleteTextures(1, &texture);
 	openGL->glDeleteVertexArrays(1, &vertex);
+	scoreText->ClearData();
+	scoreValueText->ClearData();
 	buffer->ClearData();
 }
 
 void Game::OnWheelEvent(QWheelEvent* wheelEvent) {
 	if (wheelEvent->delta() < 0) {
 		if (player->GetPosition().x() > 0) {
-			player->SetX(player->GetPosition().x() - 8);
+			player->SetX(player->GetPosition().x() - 6);
 		}
 	}
 	else {
 		if ((player->GetPosition().x() + player->GetSize().width()) < buffer->size.width()) {
-			player->SetX(player->GetPosition().x() + 8);
+			player->SetX(player->GetPosition().x() + 6);
 		}
 	}
 }

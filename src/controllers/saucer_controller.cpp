@@ -9,3 +9,8 @@ SaucerController::SaucerController() : Controller() {
 SaucerController::~SaucerController() {
 
 }
+
+void SaucerController::Think(void) {
+
+	Controller::Think();
+}

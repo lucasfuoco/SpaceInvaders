@@ -8,6 +8,7 @@ namespace SpaceInvaders {
 		public:
 			SaucerController();
 			virtual ~SaucerController();
+			virtual void Think(void) override;
 		};
 	}
 }

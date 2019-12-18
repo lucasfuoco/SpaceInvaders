@@ -83,7 +83,9 @@ Text::Text() : SpaceInvaders::Sprite(),
         0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 	};
 
-    *spriteBuffer = *labelBuffer;
+    spriteBuffer->size.setWidth(5);
+    spriteBuffer->size.setHeight(7);
+    spriteBuffer->data = nullptr;
 
     setSpriteBuffer(spriteBuffer);
     setColor(Color::GetRGBToUInt32(255, 255, 255));
@@ -99,11 +101,6 @@ void Text::ClearData(void) {
 		delete[] labelBuffer->data;
 		labelBuffer->data = nullptr;
 	}
-
-    if (spriteBuffer) {
-        delete[] spriteBuffer->data;
-        spriteBuffer->data = nullptr;
-    }
 
 	SpaceInvaders::Sprite::ClearData();
 }

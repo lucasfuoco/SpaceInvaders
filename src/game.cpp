@@ -62,7 +62,7 @@ Game::Game(Shaders* shaders) :
 		score
 	);
 	scoreValueText->SetText(scoreBuffer);
-	scoreValueText->SetX(40);
+	scoreValueText->SetX(30);
 	scoreValueText->SetY(buffer->size.height() - scoreText->GetSize().height() - 7);
 }
 

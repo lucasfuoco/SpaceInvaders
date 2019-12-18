@@ -62,7 +62,7 @@ Game::Game(Shaders* shaders) :
 		score
 	);
 	scoreValueText->SetText(scoreBuffer);
-	scoreValueText->SetX(30);
+	scoreValueText->SetX(38);
 	scoreValueText->SetY(buffer->size.height() - scoreText->GetSize().height() - 7);
 }
 
@@ -138,7 +138,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 			continue;
 		}
 
-		// Check if saucer is hit
+		// Check if saucers are hit
 		for (int saucerIndex = 0; saucerIndex < saucerCount; ++saucerIndex) {
 			if (saucers[saucerIndex]->GetIsDead()) {
 				continue;

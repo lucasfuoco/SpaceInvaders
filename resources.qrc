@@ -1,8 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-    <!-- Images -->
-    <file>game/materials/saucer1.png</file>
-  
     <!-- Shaders -->
     <file>game/shaders/sprite/sprite.vert</file>
     <file>game/shaders/sprite/sprite.frag</file>

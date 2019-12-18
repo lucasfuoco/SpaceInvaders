@@ -14,6 +14,7 @@ namespace SpaceInvaders {
 			bool GetIsDead(void);
 			int GetDeathPoint(void);
 		protected:
+			virtual void think(void);
 			void setDeathPoint(int point);
 
 			SpaceInvaders::SpriteBuffer* deathBuffer;

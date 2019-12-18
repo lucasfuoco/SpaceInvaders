@@ -47,6 +47,8 @@ void Saucer::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
 		else {
 			setSpriteBuffer(animation.frames[animation.time / animation.frameDuration]);
 		}
+
+		think();
 	}
 
 	drawSpriteBuffer(buffer, position.x(), position.y());
@@ -72,6 +74,10 @@ bool Saucer::GetIsDead(void) {
 
 int Saucer::GetDeathPoint(void) {
 	return deathPoint;
+}
+
+void Saucer::think(void) {
+
 }
 
 void Saucer::setDeathPoint(int point) {

@@ -221,12 +221,12 @@ void Game::Cleanup(QOpenGLExtraFunctions* openGL) {
 void Game::OnWheelEvent(QWheelEvent* wheelEvent) {
 	if (wheelEvent->delta() < 0) {
 		if (player->GetPosition().x() > 0) {
-			player->SetX(player->GetPosition().x() - 5);
+			player->SetX(player->GetPosition().x() - 8);
 		}
 	}
 	else {
 		if ((player->GetPosition().x() + player->GetSize().width()) < buffer->size.width()) {
-			player->SetX(player->GetPosition().x() + 5);
+			player->SetX(player->GetPosition().x() + 8);
 		}
 	}
 }

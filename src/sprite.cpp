@@ -17,7 +17,7 @@ Sprite::~Sprite() {
 }
 
 void Sprite::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {	
-	drawSpriteBuffer(buffer);
+	drawSpriteBuffer(buffer, position.x(), position.y());
 }
 
 void Sprite::Cleanup(QOpenGLExtraFunctions* openGL) {
@@ -40,6 +40,18 @@ void Sprite::SetY(int y) {
 	}
 }
 
+void Sprite::SetWidth(int width) {
+	if (spriteBuffer->size.width() != width) {
+		spriteBuffer->size.setWidth(width);
+	}
+}
+
+void Sprite::SetHeight(int height) {
+	if (spriteBuffer->size.height() != height) {
+		spriteBuffer->size.setHeight(height);
+	}
+}
+
 const QPoint Sprite::GetPosition(void) const {
 	return this->position;
 }
@@ -52,16 +64,16 @@ const QSize Sprite::GetSize(void) const {
 	return this->spriteBuffer->size;
 }
 
-void Sprite::drawSpriteBuffer(SpaceInvaders::Buffer* buffer) {
+void Sprite::drawSpriteBuffer(SpaceInvaders::Buffer* buffer, int x, int y) {
 	for (int xIndex = 0; xIndex < spriteBuffer->size.width(); ++xIndex) {
 		for (int yIndex = 0; yIndex < spriteBuffer->size.height(); ++yIndex) {
 			if (
 				spriteBuffer->data[yIndex * spriteBuffer->size.width() + xIndex] &&
-				(spriteBuffer->size.height() - 1 + position.y() - yIndex) < buffer->size.height() &&
-				(position.x() + xIndex) < buffer->size.width()
+				(spriteBuffer->size.height() - 1 + y - yIndex) < buffer->size.height() &&
+				(x + xIndex) < buffer->size.width()
 				)
 			{
-				buffer->data[(spriteBuffer->size.height() - 1 + position.y() - yIndex) * buffer->size.width() + (position.x() + xIndex)] = color;
+				buffer->data[(spriteBuffer->size.height() - 1 + y - yIndex) * buffer->size.width() + (x + xIndex)] = color;
 			}
 		}
 	}
@@ -69,6 +81,10 @@ void Sprite::drawSpriteBuffer(SpaceInvaders::Buffer* buffer) {
 
 void Sprite::setSpriteBuffer(SpriteBuffer* buffer) {
 	spriteBuffer = buffer;
+}
+
+SpriteBuffer* Sprite::getSpriteBuffer(void) {
+	return spriteBuffer;
 }
 
 void Sprite::setColor(uint32_t spriteColor) {

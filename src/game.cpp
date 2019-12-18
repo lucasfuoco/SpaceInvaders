@@ -7,11 +7,14 @@ Game::Game(Shaders* shaders) :
 	saucers(),
 	bullets(),
 	player(new SpaceInvaders::Sprites::Player()),
+	scoreText(new SpaceInvaders::Sprites::Text()),
+	scoreValueText(new SpaceInvaders::Sprites::Text()),
 	saucerCount(55),
 	bulletsInFlightCount(0),
 	deathCounters(),
 	spriteBufferLocation(-1),
 	score(0),
+	scoreBuffer(),
 	buffer(new Buffer()),
 	texture(),
 	vertex()
@@ -48,6 +51,19 @@ Game::Game(Shaders* shaders) :
 	for (int i = 0; i < saucerCount; i++) {
 		deathCounters.push_back(10);
 	}
+
+	scoreText->SetText("SCORE");
+	scoreText->SetX(4);
+	scoreText->SetY(buffer->size.height() - scoreText->GetSize().height() - 7);
+
+	sprintf(
+		scoreBuffer,
+		"%i",
+		score
+	);
+	scoreValueText->SetText(scoreBuffer);
+	scoreValueText->SetX(40);
+	scoreValueText->SetY(buffer->size.height() - scoreText->GetSize().height() - 7);
 }
 
 Game::~Game() {
@@ -59,6 +75,8 @@ Game::~Game() {
 		delete bullets[i];
 	}
 
+	delete scoreValueText;
+	delete scoreText;
 	delete player;
 	delete buffer;
 }
@@ -67,6 +85,12 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	spriteShaderProgram->bind();
 
 	clearBuffer(Color::GetRGBToUInt32(0, 0, 0));
+
+	// Score text
+	scoreText->UpdateSpriteBuffer(buffer);
+
+	// Score value text
+	scoreValueText->UpdateSpriteBuffer(buffer);
 
 	// Player
 	player->UpdateSpriteBuffer(buffer);
@@ -122,6 +146,13 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 			if (getSpritesAreOverlaping(bullets[bulletIndex], saucers[saucerIndex])) {
 				score += saucers[saucerIndex]->GetDeathPoint();
+				sprintf(
+					scoreBuffer,
+					"%i",
+					score
+				);
+				scoreValueText->SetText(scoreBuffer);
+
 				saucers[saucerIndex]->Die();
 
 				bullets[bulletIndex]->ResetPosition();

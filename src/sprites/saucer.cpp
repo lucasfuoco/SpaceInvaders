@@ -49,7 +49,7 @@ void Saucer::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
 		}
 	}
 
-	drawSpriteBuffer(buffer);
+	drawSpriteBuffer(buffer, position.x(), position.y());
 
 	if (animation.loop) {
 		animation.time += 1;

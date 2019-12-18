@@ -28,11 +28,14 @@ namespace SpaceInvaders {
 		virtual void ClearData(void);
 		void SetX(int x);
 		void SetY(int y);
+		void SetWidth(int width);
+		void SetHeight(int height);
 		const QPoint GetPosition(void) const;
 		const QSize GetSize(void) const;
 	protected:
-		virtual void drawSpriteBuffer(SpaceInvaders::Buffer* buffer);
+		virtual void drawSpriteBuffer(SpaceInvaders::Buffer* buffer, int x, int y);
 		void setSpriteBuffer(SpriteBuffer* buffer);
+		SpriteBuffer* getSpriteBuffer(void);
 		void setColor(uint32_t spriteColor);
 
 		QPoint position;

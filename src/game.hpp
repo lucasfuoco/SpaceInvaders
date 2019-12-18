@@ -10,6 +10,7 @@
 #include <sprites/saucer.hpp>
 #include <sprites/player.hpp>
 #include <sprites/bullet.hpp>
+#include <sprites/text.hpp>
 #include <sprite.hpp>
 #include <shaders.hpp>
 
@@ -52,11 +53,14 @@ namespace SpaceInvaders {
 		std::vector<SpaceInvaders::Sprites::Saucer*> saucers;
 		std::vector<SpaceInvaders::Sprites::Bullet*> bullets;
 		SpaceInvaders::Sprites::Player* player;
+		SpaceInvaders::Sprites::Text* scoreText;
+		SpaceInvaders::Sprites::Text* scoreValueText;
 		int saucerCount;
 		int bulletsInFlightCount;
 		std::vector<int> deathCounters;
 		int spriteBufferLocation;
 		int score;
+		char scoreBuffer[4096];
 		Buffer* buffer;
 		GLuint texture;
 		GLuint vertex;

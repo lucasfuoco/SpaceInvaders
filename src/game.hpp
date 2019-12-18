@@ -9,7 +9,7 @@
 #include <sprites/saucer_types.hpp>
 #include <sprites/saucer.hpp>
 #include <sprites/player.hpp>
-#include <sprites/bullet.hpp>
+#include <sprites/player_bullet.hpp>
 #include <sprites/text.hpp>
 #include <sprite.hpp>
 #include <shaders.hpp>
@@ -51,7 +51,7 @@ namespace SpaceInvaders {
 
 		QOpenGLShaderProgram* spriteShaderProgram;
 		std::vector<SpaceInvaders::Sprites::Saucer*> saucers;
-		std::vector<SpaceInvaders::Sprites::Bullet*> bullets;
+		std::vector<SpaceInvaders::Sprites::PlayerBullet*> playerBullets;
 		SpaceInvaders::Sprites::Player* player;
 		SpaceInvaders::Sprites::Text* scoreText;
 		SpaceInvaders::Sprites::Text* scoreValueText;

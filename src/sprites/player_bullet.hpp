@@ -5,10 +5,10 @@
 
 namespace SpaceInvaders {
 	namespace Sprites {
-		class Bullet : public SpaceInvaders::Sprite {
+		class PlayerBullet : public SpaceInvaders::Sprite {
 		public:
-			Bullet();
-			virtual ~Bullet();
+			PlayerBullet();
+			virtual ~PlayerBullet();
 			virtual void ClearData(void) override;
 			int GetDirection(void);
 			void SetDirection(int direction);

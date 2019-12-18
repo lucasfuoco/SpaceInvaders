@@ -5,7 +5,7 @@ using namespace SpaceInvaders;
 Game::Game(Shaders* shaders) :
 	spriteShaderProgram(shaders->GetSprite()),
 	saucers(),
-	bullets(),
+	playerBullets(),
 	player(new SpaceInvaders::Sprites::Player()),
 	scoreText(new SpaceInvaders::Sprites::Text()),
 	scoreValueText(new SpaceInvaders::Sprites::Text()),
@@ -45,7 +45,7 @@ Game::Game(Shaders* shaders) :
 	}
 
 	for (int i = 0; i < GAME_MAX_BULLETS_IN_FLIGHT; i++) {
-		bullets.push_back(new SpaceInvaders::Sprites::Bullet());
+		playerBullets.push_back(new SpaceInvaders::Sprites::PlayerBullet());
 	}
 
 	for (int i = 0; i < saucerCount; i++) {
@@ -71,8 +71,8 @@ Game::~Game() {
 		delete saucers[i];
 	}
 
-	for (int i = 0; i < bullets.size(); i++) {
-		delete bullets[i];
+	for (int i = 0; i < playerBullets.size(); i++) {
+		delete playerBullets[i];
 	}
 
 	delete scoreValueText;
@@ -105,8 +105,8 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	}
 
 	// Bullets
-	for (int i = 0; i < bullets.size(); i++) {
-		bullets[i]->UpdateSpriteBuffer(buffer);
+	for (int i = 0; i < playerBullets.size(); i++) {
+		playerBullets[i]->UpdateSpriteBuffer(buffer);
 	}
 
 	openGL->glTexSubImage2D(
@@ -127,13 +127,11 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 	// Simulate bullets
 	for (int bulletIndex = 0; bulletIndex < bulletsInFlightCount;) {
-		bullets[bulletIndex]->SetY(bullets[bulletIndex]->GetPosition().y() + bullets[bulletIndex]->GetDirection());
-		if (
-			(bullets[bulletIndex]->GetPosition().y() >= buffer->size.height())
-		)
+		playerBullets[bulletIndex]->SetY(playerBullets[bulletIndex]->GetPosition().y() + playerBullets[bulletIndex]->GetDirection());
+		if (playerBullets[bulletIndex]->GetPosition().y() >= buffer->size.height())
 		{
-			bullets[bulletIndex]->ResetPosition();
-			std::rotate(bullets.begin() + bulletIndex, bullets.begin() + bulletIndex + 1, bullets.end());
+			playerBullets[bulletIndex]->ResetPosition();
+			std::rotate(playerBullets.begin() + bulletIndex, playerBullets.begin() + bulletIndex + 1, playerBullets.end());
 			bulletsInFlightCount -= 1;
 			continue;
 		}
@@ -144,7 +142,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 				continue;
 			}
 
-			if (getSpritesAreOverlaping(bullets[bulletIndex], saucers[saucerIndex])) {
+			if (getSpritesAreOverlaping(playerBullets[bulletIndex], saucers[saucerIndex])) {
 				score += saucers[saucerIndex]->GetDeathPoint();
 				sprintf(
 					scoreBuffer,
@@ -155,8 +153,8 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 				saucers[saucerIndex]->Die();
 
-				bullets[bulletIndex]->ResetPosition();
-				std::rotate(bullets.begin() + bulletIndex, bullets.begin() + bulletIndex + 1, bullets.end());
+				playerBullets[bulletIndex]->ResetPosition();
+				std::rotate(playerBullets.begin() + bulletIndex, playerBullets.begin() + bulletIndex + 1, playerBullets.end());
 				bulletsInFlightCount -= 1;
 				continue;
 			}
@@ -167,9 +165,9 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 	// Process events
 	if (player->GetIsFiring() && (bulletsInFlightCount < GAME_MAX_BULLETS_IN_FLIGHT)) {
-  		bullets[bulletsInFlightCount]->SetX(player->GetPosition().x() + (player->GetSize().width() / 2));
-		bullets[bulletsInFlightCount]->SetY(player->GetPosition().y() + player->GetSize().height());
-		bullets[bulletsInFlightCount]->SetDirection(4);
+  		playerBullets[bulletsInFlightCount]->SetX(player->GetPosition().x() + (player->GetSize().width() / 2));
+		playerBullets[bulletsInFlightCount]->SetY(player->GetPosition().y() + player->GetSize().height());
+		playerBullets[bulletsInFlightCount]->SetDirection(4);
 		bulletsInFlightCount += 1;
 
 		player->Reload();
@@ -211,8 +209,8 @@ void Game::Cleanup(QOpenGLExtraFunctions* openGL) {
 		saucers[i]->Cleanup(openGL);
 	}
 
-	for (int i = 0; i < bullets.size(); i++) {
-		bullets[i]->Cleanup(openGL);
+	for (int i = 0; i < playerBullets.size(); i++) {
+		playerBullets[i]->Cleanup(openGL);
 	}
 
 	openGL->glDeleteTextures(1, &texture);

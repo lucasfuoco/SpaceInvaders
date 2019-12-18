@@ -1,8 +1,8 @@
-#include <sprites/bullet.hpp>
+#include <sprites/player_bullet.hpp>
 
 using namespace SpaceInvaders::Sprites;
 
-Bullet::Bullet() : SpaceInvaders::Sprite(),
+PlayerBullet::PlayerBullet() : SpaceInvaders::Sprite(),
 	buffer(new SpaceInvaders::SpriteBuffer()),
 	direction()
 {
@@ -22,28 +22,28 @@ Bullet::Bullet() : SpaceInvaders::Sprite(),
 	setSpriteBuffer(buffer);
 }
 
-Bullet::~Bullet() {
+PlayerBullet::~PlayerBullet() {
 	delete buffer;
 }
 
-void Bullet::ClearData(void) {
+void PlayerBullet::ClearData(void) {
 	if (buffer) {
 		delete[] buffer->data;
 		buffer->data = nullptr;
 	}
 }
 
-int Bullet::GetDirection(void) {
+int PlayerBullet::GetDirection(void) {
 	return direction;
 }
 
-void Bullet::SetDirection(int dir) {
+void PlayerBullet::SetDirection(int dir) {
 	if (direction != dir) {
 		direction = dir;
 	}
 }
 
-void Bullet::ResetPosition(void) {
+void PlayerBullet::ResetPosition(void) {
 	position.setX(1000);
 	position.setY(1000);
 }

@@ -47,6 +47,7 @@ buffer2(new SpaceInvaders::SpriteBuffer())
 	animation.frames.push_back(buffer2);
 
 	setColor(Color::GetRGBToUInt32(128, 205, 133));
+	setDeathPoint(40);
 }
 
 Saucer2::~Saucer2() {

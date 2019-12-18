@@ -11,6 +11,7 @@ Game::Game(Shaders* shaders) :
 	bulletsInFlightCount(0),
 	deathCounters(),
 	spriteBufferLocation(-1),
+	score(0),
 	buffer(new Buffer()),
 	texture(),
 	vertex()
@@ -120,6 +121,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 			}
 
 			if (getSpritesAreOverlaping(bullets[bulletIndex], saucers[saucerIndex])) {
+				score += saucers[saucerIndex]->GetDeathPoint();
 				saucers[saucerIndex]->Die();
 
 				bullets[bulletIndex]->ResetPosition();
@@ -136,7 +138,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	if (player->GetIsFiring() && (bulletsInFlightCount < GAME_MAX_BULLETS_IN_FLIGHT)) {
   		bullets[bulletsInFlightCount]->SetX(player->GetPosition().x() + (player->GetSize().width() / 2));
 		bullets[bulletsInFlightCount]->SetY(player->GetPosition().y() + player->GetSize().height());
-		bullets[bulletsInFlightCount]->SetDirection(2);
+		bullets[bulletsInFlightCount]->SetDirection(4);
 		bulletsInFlightCount += 1;
 
 		player->Reload();

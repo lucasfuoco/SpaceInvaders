@@ -6,6 +6,7 @@
 #include <sprites/saucers/saucer1.hpp>
 #include <sprites/saucers/saucer2.hpp>
 #include <sprites/saucers/saucer3.hpp>
+#include <sprites/saucer_types.hpp>
 #include <sprites/saucer.hpp>
 #include <sprites/player.hpp>
 #include <sprites/bullet.hpp>
@@ -15,6 +16,8 @@
 #define GAME_MAX_BULLETS_IN_FLIGHT 128
 
 namespace SpaceInvaders {
+	using namespace SpaceInvaders::Sprites;
+
 	class Sprite;
 
 	struct Buffer {
@@ -27,12 +30,6 @@ namespace SpaceInvaders {
 				data = nullptr;
 			}
 		}
-	};
-
-	enum SaucerTypes {
-		Saucer1 = 0,
-		Saucer2 = 1,
-		Saucer3 = 2
 	};
 
 	class Game {
@@ -59,6 +56,7 @@ namespace SpaceInvaders {
 		int bulletsInFlightCount;
 		std::vector<int> deathCounters;
 		int spriteBufferLocation;
+		int score;
 		Buffer* buffer;
 		GLuint texture;
 		GLuint vertex;

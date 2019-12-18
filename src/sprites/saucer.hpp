@@ -12,10 +12,14 @@ namespace SpaceInvaders {
 			virtual void UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) override;
 			void Die(void);
 			bool GetIsDead(void);
+			int GetDeathPoint(void);
 		protected:
+			void setDeathPoint(int point);
+
 			SpaceInvaders::SpriteBuffer* deathBuffer;
 		private:
 			bool isDead;
+			int deathPoint;
 		};
 	}
 }

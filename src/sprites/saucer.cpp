@@ -5,7 +5,8 @@ using namespace SpaceInvaders::Sprites;
 
 Saucer::Saucer() : Sprite(),
 	deathBuffer(new SpaceInvaders::SpriteBuffer()),
-	isDead(false)
+	isDead(false),
+	deathPoint(10)
 {
 	deathBuffer->size.setWidth(13);
 	deathBuffer->size.setHeight(7);
@@ -67,4 +68,14 @@ void Saucer::Die(void) {
 
 bool Saucer::GetIsDead(void) {
 	return isDead;
+}
+
+int Saucer::GetDeathPoint(void) {
+	return deathPoint;
+}
+
+void Saucer::setDeathPoint(int point) {
+	if (deathPoint != point) {
+		deathPoint = point;
+	}
 }

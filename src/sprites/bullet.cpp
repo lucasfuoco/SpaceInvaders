@@ -15,8 +15,8 @@ Bullet::Bullet() : SpaceInvaders::Sprite(),
 		1  // @
 	};
 
-	position.setX(0);
-	position.setY(0);
+	position.setX(1000);
+	position.setY(1000);
 
 	setColor(Color::GetRGBToUInt32(255, 244, 182));
 	setSpriteBuffer(buffer);
@@ -44,6 +44,6 @@ void Bullet::SetDirection(int dir) {
 }
 
 void Bullet::ResetPosition(void) {
-	position.setX(0);
-	position.setY(0);
+	position.setX(1000);
+	position.setY(1000);
 }

@@ -47,6 +47,7 @@ Saucer1::Saucer1() : Sprites::Saucer(),
 	animation.frames.push_back(buffer2);
 
 	setColor(Color::GetRGBToUInt32(205, 171, 128));
+	setDeathPoint(10);
 }
 
 Saucer1::~Saucer1() {

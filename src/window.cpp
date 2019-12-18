@@ -75,8 +75,6 @@ void Window::drawFrame(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 
-	glDisable(GL_DEPTH_TEST);
-
 	game.UpdateCommandBuffers(this);
 
 	openGLContext->swapBuffers(this);

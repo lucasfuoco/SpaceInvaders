@@ -5,16 +5,15 @@
 
 namespace SpaceInvaders {
 	namespace Sprites {
-		class PlayerBullet : public SpaceInvaders::Sprite {
+		class Bullet : public SpaceInvaders::Sprite {
 		public:
-			PlayerBullet();
-			virtual ~PlayerBullet();
+			Bullet();
+			virtual ~Bullet();
 			virtual void ClearData(void) override;
 			int GetDirection(void);
 			void SetDirection(int direction);
 			void ResetPosition(void);
 		private:
-			SpaceInvaders::SpriteBuffer* buffer;
 			int direction;
 		};
 	}

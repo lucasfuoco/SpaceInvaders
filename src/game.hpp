@@ -9,7 +9,8 @@
 #include <sprites/saucer_types.hpp>
 #include <sprites/saucer.hpp>
 #include <sprites/player.hpp>
-#include <sprites/player_bullet.hpp>
+#include <sprites/bullets/sharp_bullet.hpp>
+#include <sprites/bullet.hpp>
 #include <sprites/text.hpp>
 #include <controller.hpp>
 #include <controllers/saucer_controller.hpp>
@@ -48,7 +49,7 @@ namespace SpaceInvaders {
 		void OnKeyEvent(QKeyEvent* keyEvent);
 		const std::vector<SpaceInvaders::Sprites::Saucer*>* GetSaucers(void) const;
 		SpaceInvaders::Sprites::Player* GetPlayer(void) const;
-		const std::vector<SpaceInvaders::Sprites::PlayerBullet*>* GetPlayerBullets(void) const;
+		const std::vector<SpaceInvaders::Sprites::Bullet*>* GetPlayerBullets(void) const;
 		const int GetBulletsInFlightCount(void) const;
 		void AddBulletsInFlight(int bulletCount);
 		std::vector<int>* GetDeathCounters(void);
@@ -61,7 +62,7 @@ namespace SpaceInvaders {
 
 		QOpenGLShaderProgram* spriteShaderProgram;
 		std::vector<SpaceInvaders::Sprites::Saucer*>* saucers;
-		std::vector<SpaceInvaders::Sprites::PlayerBullet*>* playerBullets;
+		std::vector<SpaceInvaders::Sprites::Bullet*>* playerBullets;
 		SpaceInvaders::Sprites::Player* player;
 		SpaceInvaders::Sprites::Text* scoreText;
 		SpaceInvaders::Sprites::Text* scoreValueText;

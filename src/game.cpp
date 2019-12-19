@@ -5,7 +5,7 @@ using namespace SpaceInvaders;
 Game::Game(Shaders* shaders) :
 	spriteShaderProgram(shaders->GetSprite()),
 	saucers(new std::vector<SpaceInvaders::Sprites::Saucer*>()),
-	playerBullets(new std::vector<SpaceInvaders::Sprites::PlayerBullet*>()),
+	playerBullets(new std::vector<SpaceInvaders::Sprites::Bullet*>()),
 	player(new SpaceInvaders::Sprites::Player()),
 	scoreText(new SpaceInvaders::Sprites::Text()),
 	scoreValueText(new SpaceInvaders::Sprites::Text()),
@@ -45,7 +45,7 @@ Game::Game(Shaders* shaders) :
 	}
 
 	for (int i = 0; i < GAME_MAX_BULLETS_IN_FLIGHT; i++) {
-		playerBullets->push_back(new SpaceInvaders::Sprites::PlayerBullet());
+		playerBullets->push_back(new SpaceInvaders::Sprites::Bullets::SharpBullet());
 	}
 
 	for (int i = 0; i < saucers->size(); i++) {
@@ -250,7 +250,7 @@ SpaceInvaders::Sprites::Player* Game::GetPlayer(void) const {
 	return player;
 }
 
-const std::vector<SpaceInvaders::Sprites::PlayerBullet*>* Game::GetPlayerBullets(void) const {
+const std::vector<SpaceInvaders::Sprites::Bullet*>* Game::GetPlayerBullets(void) const {
 	return this->playerBullets;
 }
 

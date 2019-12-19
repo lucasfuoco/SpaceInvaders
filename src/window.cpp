@@ -25,8 +25,8 @@ Window::~Window() {
 void Window::resizeEvent(QResizeEvent* resizeEvent) {
 	if (isOpenGLFunctionsInitialized && isExposed()) {
 		openGLContext->makeCurrent(this);
-
 		glViewport(0, 0, width(), height());
+		openGLContext->swapBuffers(this);
 	}
 }
 

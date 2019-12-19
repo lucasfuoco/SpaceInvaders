@@ -2,7 +2,9 @@
 
 using namespace SpaceInvaders;
 
-Controller::Controller() {
+Controller::Controller(SpaceInvaders::Game* _game) :
+	game(_game)
+{
 
 }
 

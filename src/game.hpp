@@ -11,7 +11,9 @@
 #include <sprites/player.hpp>
 #include <sprites/player_bullet.hpp>
 #include <sprites/text.hpp>
+#include <controller.hpp>
 #include <controllers/saucer_controller.hpp>
+#include <controllers/player_controller.hpp>
 #include <sprite.hpp>
 #include <shaders.hpp>
 
@@ -19,9 +21,9 @@
 
 namespace SpaceInvaders {
 	using namespace SpaceInvaders::Sprites;
-	using namespace SpaceInvaders::Controllers;
 
 	class Sprite;
+	class Controller;
 
 	struct Buffer {
 		QSize size = QSize();
@@ -44,6 +46,12 @@ namespace SpaceInvaders {
 		void Cleanup(QOpenGLExtraFunctions* openGL);
 		void OnWheelEvent(QWheelEvent* wheelEvent);
 		void OnKeyEvent(QKeyEvent* keyEvent);
+		const std::vector<SpaceInvaders::Sprites::Saucer*>* GetSaucers(void) const;
+		SpaceInvaders::Sprites::Player* GetPlayer(void) const;
+		const std::vector<SpaceInvaders::Sprites::PlayerBullet*>* GetPlayerBullets(void) const;
+		const int GetBulletsInFlightCount(void) const;
+		void AddBulletsInFlight(int bulletCount);
+		std::vector<int>* GetDeathCounters(void);
 	private:
 		void clearBuffer(uint32_t color);
 		bool getSpritesAreOverlaping(
@@ -53,19 +61,18 @@ namespace SpaceInvaders {
 
 		QOpenGLShaderProgram* spriteShaderProgram;
 		std::vector<SpaceInvaders::Sprites::Saucer*>* saucers;
-		std::vector<SpaceInvaders::Sprites::PlayerBullet*> playerBullets;
+		std::vector<SpaceInvaders::Sprites::PlayerBullet*>* playerBullets;
 		SpaceInvaders::Sprites::Player* player;
 		SpaceInvaders::Sprites::Text* scoreText;
 		SpaceInvaders::Sprites::Text* scoreValueText;
-		int saucerCount;
 		int bulletsInFlightCount;
-		std::vector<int> deathCounters;
+		std::vector<int>* deathCounters;
 		int spriteBufferLocation;
 		int score;
 		char scoreBuffer[4096];
 		Buffer* buffer;
 		GLuint texture;
 		GLuint vertex;
-		SaucerController saucerController;
+		std::vector<SpaceInvaders::Controller*> controllers;
 	};
 }

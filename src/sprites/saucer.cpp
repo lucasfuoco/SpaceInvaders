@@ -74,6 +74,10 @@ int Saucer::GetDeathPoint(void) {
 	return deathPoint;
 }
 
+bool Saucer::GetSpriteInFieldOfView(const SpaceInvaders::Sprite* sprite) {
+	return false;
+}
+
 void Saucer::setDeathPoint(int point) {
 	if (deathPoint != point) {
 		deathPoint = point;

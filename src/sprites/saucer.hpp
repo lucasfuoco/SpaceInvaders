@@ -13,6 +13,7 @@ namespace SpaceInvaders {
 			void Die(void);
 			bool GetIsDead(void);
 			int GetDeathPoint(void);
+			bool GetSpriteInFieldOfView(const SpaceInvaders::Sprite* sprite);
 		protected:
 			void setDeathPoint(int point);
 

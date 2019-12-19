@@ -6,10 +6,10 @@
 
 namespace SpaceInvaders {
 	namespace Controllers {
-		class SaucerController : public SpaceInvaders::Controller {
+		class PlayerController : public SpaceInvaders::Controller {
 		public:
-			SaucerController(SpaceInvaders::Game* game);
-			virtual ~SaucerController();
+			PlayerController(SpaceInvaders::Game* game);
+			virtual ~PlayerController();
 			virtual void Think(void) override;
 		};
 	}

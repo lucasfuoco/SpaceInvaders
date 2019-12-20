@@ -7,12 +7,29 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 	buffer2(new SpaceInvaders::SpriteBuffer())
 {
 	buffer1->size.setWidth(3);
-	buffer1->size.setHeight(8);
-	buffer1->data = new uint8_t[24]
+	buffer1->size.setHeight(7);
+	buffer1->data = new uint8_t[21]
 	{
 		0,0,1, // ..@
 		0,1,0, // .@.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1, // ..@
+		0,1,0, // .@.
 		1,0,0  // @..
+	};
+
+	buffer2->size.setWidth(3);
+	buffer2->size.setHeight(7);
+	buffer2->data = new uint8_t[21]
+	{
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1, // ..@
+		0,1,0, // .@.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1  // ..@
 	};
 
 	position.setX(1000);

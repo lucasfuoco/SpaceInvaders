@@ -23,8 +23,8 @@ void SaucerController::Think(void) {
 
 		if (game->GetSaucers()->at(i)->GetIsFiring() && (game->GetSaucerBulletsInFlightCount() < GAME_MAX_BULLETS_IN_FLIGHT)) {
 			game->GetSaucerBullets()->at(game->GetSaucerBulletsInFlightCount())->SetX(game->GetSaucers()->at(i)->GetPosition().x() + (game->GetSaucers()->at(i)->GetSize().width() / 2));
-			game->GetSaucerBullets()->at(game->GetSaucerBulletsInFlightCount())->SetY(game->GetSaucers()->at(i)->GetPosition().y() + game->GetSaucers()->at(i)->GetSize().height());
-			game->GetSaucerBullets()->at(game->GetSaucerBulletsInFlightCount())->SetDirection(2);
+			game->GetSaucerBullets()->at(game->GetSaucerBulletsInFlightCount())->SetY(game->GetSaucers()->at(i)->GetPosition().y() - game->GetSaucers()->at(i)->GetSize().height());
+			game->GetSaucerBullets()->at(game->GetSaucerBulletsInFlightCount())->SetDirection(-1);
 			game->AddSaucerBulletsInFlight(1);
 
 			game->GetSaucers()->at(i)->Reload();

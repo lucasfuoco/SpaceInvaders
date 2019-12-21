@@ -46,7 +46,7 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 	animation.frames.push_back(buffer1);
 	animation.frames.push_back(buffer2);
 
-	setColor(Color::GetRGBToUInt32(125, 175, 255));
+	setColor(Color::GetRGBToUInt32(230, 248, 255));
 }
 
 TriBullet::~TriBullet() {

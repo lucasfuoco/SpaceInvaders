@@ -43,7 +43,7 @@ void BulletController::Think(void) {
 	}
 
 	for (int i = 0; i < game->GetSaucerBulletsInFlightCount();) {
-		game->GetSaucerBullets()->at(i)->SetY(game->GetSaucerBullets()->at(i)->GetPosition().y() - game->GetSaucerBullets()->at(i)->GetDirection());
+		game->GetSaucerBullets()->at(i)->SetY(game->GetSaucerBullets()->at(i)->GetPosition().y() + game->GetSaucerBullets()->at(i)->GetDirection());
 		if (game->GetSaucerBullets()->at(i)->GetPosition().y() <= 0)
 		{
 			game->GetSaucerBullets()->at(i)->ResetPosition();

@@ -42,6 +42,37 @@ void BulletController::Think(void) {
 		i += 1;
 	}
 
+	for (int i = 0; i < game->GetSaucerBulletsInFlightCount();) {
+		game->GetSaucerBullets()->at(i)->SetY(game->GetSaucerBullets()->at(i)->GetPosition().y() - game->GetSaucerBullets()->at(i)->GetDirection());
+		if (game->GetSaucerBullets()->at(i)->GetPosition().y() <= 0)
+		{
+			game->GetSaucerBullets()->at(i)->ResetPosition();
+			std::rotate(game->GetSaucerBullets()->begin() + i, game->GetSaucerBullets()->begin() + i + 1, game->GetSaucerBullets()->end());
+			game->RemoveSaucerBulletsInFlight(1);
+			continue;
+		}
+
+		// Check if saucers are hit
+		/**for (int saucerIndex = 0; saucerIndex < game->GetSaucers()->size(); saucerIndex++) {
+			if (game->GetSaucers()->at(saucerIndex)->GetIsDead()) {
+				continue;
+			}
+
+			if (getSpritesAreOverlaping(game->GetPlayerBullets()->at(i), game->GetSaucers()->at(saucerIndex))) {
+				game->AddScore(game->GetSaucers()->at(saucerIndex)->GetDeathPoint());
+
+				game->GetSaucers()->at(saucerIndex)->Die();
+
+				game->GetPlayerBullets()->at(i)->ResetPosition();
+				std::rotate(game->GetPlayerBullets()->begin() + i, game->GetPlayerBullets()->begin() + i + 1, game->GetPlayerBullets()->end());
+				game->RemovePlayerBulletsInFlight(1);
+				continue;
+			}
+		}*/
+
+		i += 1;
+	}
+
 	SpaceInvaders::Controller::Think();
 }
 

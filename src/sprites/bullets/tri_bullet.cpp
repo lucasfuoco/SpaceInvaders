@@ -6,26 +6,34 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 	buffer1(new SpaceInvaders::SpriteBuffer()),
 	buffer2(new SpaceInvaders::SpriteBuffer())
 {
-	buffer1->size.setWidth(2);
-	buffer1->size.setHeight(5);
-	buffer1->data = new uint8_t[10]
+	buffer1->size.setWidth(3);
+	buffer1->size.setHeight(9);
+	buffer1->data = new uint8_t[27]
 	{
-		0,1, // .@
-		1,0, // @.
-		0,1, // .@
-		1,0, // @.
-		0,1, // .@
+		0,0,1, // ..@
+		0,1,0, // .@.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1, // ..@
+		0,1,0, // .@.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1  // ..@
 	};
 
-	buffer2->size.setWidth(2);
-	buffer2->size.setHeight(5);
-	buffer2->data = new uint8_t[10]
+	buffer2->size.setWidth(3);
+	buffer2->size.setHeight(9);
+	buffer2->data = new uint8_t[27]
 	{
-		1,0, // @.
-		0,1, // .@
-		1,0, // @.
-		0,1, // .@
-		1,0, // @.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1, // ..@
+		0,1,0, // .@.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1, // ..@
+		0,1,0, // .@.
+		1,0,0  // @..
 	};
 
 	position.setX(1000);
@@ -33,12 +41,12 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 
 	animation.loop = true;
 	animation.frameCount = 2;
-	animation.frameDuration = 5;
+	animation.frameDuration = 4;
 	animation.time = 0;
 	animation.frames.push_back(buffer1);
 	animation.frames.push_back(buffer2);
 
-	setColor(Color::GetRGBToUInt32(255, 244, 182));
+	setColor(Color::GetRGBToUInt32(125, 175, 255));
 }
 
 TriBullet::~TriBullet() {

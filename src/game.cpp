@@ -126,9 +126,14 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 		saucers->at(i)->UpdateSpriteBuffer(buffer);
 	}
 
-	// Bullets
+	// Player Bullets
 	for (int i = 0; i < playerBullets->size(); i++) {
 		playerBullets->at(i)->UpdateSpriteBuffer(buffer);
+	}
+
+	// Saucer Bullets
+	for (int i = 0; i < saucerBullets->size(); i++) {
+		saucerBullets->at(i)->UpdateSpriteBuffer(buffer);
 	}
 
 	openGL->glTexSubImage2D(

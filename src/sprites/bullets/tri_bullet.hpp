@@ -11,6 +11,7 @@ namespace SpaceInvaders {
 				TriBullet();
 				virtual ~TriBullet();
 				virtual void ClearData(void) override;
+				virtual void UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) override;
 			private:
 				SpaceInvaders::SpriteBuffer* buffer1;
 				SpaceInvaders::SpriteBuffer* buffer2;

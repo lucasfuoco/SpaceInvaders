@@ -48,6 +48,7 @@ Saucer1::Saucer1() : Sprites::Saucer(),
 
 	setColor(Color::GetRGBToUInt32(205, 171, 128));
 	setDeathPoint(10);
+	setReloadDuration(60);
 }
 
 Saucer1::~Saucer1() {

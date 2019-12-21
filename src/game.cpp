@@ -6,10 +6,12 @@ Game::Game(Shaders* shaders) :
 	spriteShaderProgram(shaders->GetSprite()),
 	saucers(new std::vector<SpaceInvaders::Sprites::Saucer*>()),
 	playerBullets(new std::vector<SpaceInvaders::Sprites::Bullet*>()),
+	saucerBullets(new std::vector<SpaceInvaders::Sprites::Bullet*>()),
 	player(new SpaceInvaders::Sprites::Player()),
 	scoreText(new SpaceInvaders::Sprites::Text()),
 	scoreValueText(new SpaceInvaders::Sprites::Text()),
-	bulletsInFlightCount(0),
+	playerBulletsInFlightCount(0),
+	saucerBulletsInFlightCount(0),
 	deathCounters(new std::vector<int>()),
 	spriteBufferLocation(-1),
 	score(0),
@@ -48,6 +50,10 @@ Game::Game(Shaders* shaders) :
 		playerBullets->push_back(new SpaceInvaders::Sprites::Bullets::SharpBullet());
 	}
 
+	for (int i = 0; i < GAME_MAX_BULLETS_IN_FLIGHT; i++) {
+		saucerBullets->push_back(new SpaceInvaders::Sprites::Bullets::TriBullet());
+	}
+
 	for (int i = 0; i < saucers->size(); i++) {
 		deathCounters->push_back(10);
 	}
@@ -65,6 +71,7 @@ Game::Game(Shaders* shaders) :
 	scoreValueText->SetX(38);
 	scoreValueText->SetY(buffer->size.height() - scoreText->GetSize().height() - 7);
 
+	controllers.push_back(new SpaceInvaders::Controllers::BulletController(this));
 	controllers.push_back(new SpaceInvaders::Controllers::SaucerController(this));
 	controllers.push_back(new SpaceInvaders::Controllers::PlayerController(this));
 }
@@ -78,6 +85,10 @@ Game::~Game() {
 		delete playerBullets->at(i);
 	}
 
+	for (int i = 0; i < saucerBullets->size(); i++) {
+		delete saucerBullets->at(i);
+	}
+
 	for (int i = 0; i < controllers.size(); i++) {
 		delete controllers[i];
 	}
@@ -88,6 +99,7 @@ Game::~Game() {
 	delete player;
 	delete buffer;
 	delete playerBullets;
+	delete saucerBullets;
 	delete saucers;
 }
 
@@ -128,45 +140,6 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 	openGL->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-
-	// Simulate bullets
-	for (int bulletIndex = 0; bulletIndex < bulletsInFlightCount;) {
-		playerBullets->at(bulletIndex)->SetY(playerBullets->at(bulletIndex)->GetPosition().y() + playerBullets->at(bulletIndex)->GetDirection());
-		if (playerBullets->at(bulletIndex)->GetPosition().y() >= buffer->size.height())
-		{
-			playerBullets->at(bulletIndex)->ResetPosition();
-			std::rotate(playerBullets->begin() + bulletIndex, playerBullets->begin() + bulletIndex + 1, playerBullets->end());
-			bulletsInFlightCount -= 1;
-			continue;
-		}
-
-		// Check if saucers are hit
-		for (int saucerIndex = 0; saucerIndex < saucers->size(); ++saucerIndex) {
-			if (saucers->at(saucerIndex)->GetIsDead()) {
-				continue;
-			}
-
-			if (getSpritesAreOverlaping(playerBullets->at(bulletIndex), saucers->at(saucerIndex))) {
-				score += saucers->at(saucerIndex)->GetDeathPoint();
-				sprintf(
-					scoreBuffer,
-					"%i",
-					score
-				);
-				scoreValueText->SetText(scoreBuffer);
-
-				saucers->at(saucerIndex)->Die();
-
-				playerBullets->at(bulletIndex)->ResetPosition();
-				std::rotate(playerBullets->begin() + bulletIndex, playerBullets->begin() + bulletIndex + 1, playerBullets->end());
-				bulletsInFlightCount -= 1;
-				continue;
-			}
-		}
-
-		bulletIndex += 1;
-	}
-
 	// Controllers
 	for (int i = 0; i < controllers.size(); i++) {
 		controllers[i]->Think();
@@ -204,12 +177,17 @@ void Game::OnGLInitialized(QOpenGLExtraFunctions* openGL) {
 
 void Game::Cleanup(QOpenGLExtraFunctions* openGL) {
 	player->Cleanup(openGL);
+
 	for (int i = 0; i < saucers->size(); i++) {
 		saucers->at(i)->Cleanup(openGL);
 	}
 
 	for (int i = 0; i < playerBullets->size(); i++) {
 		playerBullets->at(i)->Cleanup(openGL);
+	}
+
+	for (int i = 0; i < saucerBullets->size(); i++) {
+		saucerBullets->at(i)->Cleanup(openGL);
 	}
 
 	openGL->glDeleteTextures(1, &texture);
@@ -242,6 +220,10 @@ void Game::OnKeyEvent(QKeyEvent* keyEvent) {
 	}
 }
 
+const Buffer* Game::GetBuffer(void) const {
+	return this->buffer;
+}
+
 const std::vector<SpaceInvaders::Sprites::Saucer*>* Game::GetSaucers(void) const {
 	return this->saucers;
 }
@@ -250,39 +232,54 @@ SpaceInvaders::Sprites::Player* Game::GetPlayer(void) const {
 	return player;
 }
 
-const std::vector<SpaceInvaders::Sprites::Bullet*>* Game::GetPlayerBullets(void) const {
+std::vector<SpaceInvaders::Sprites::Bullet*>* Game::GetPlayerBullets(void) const {
 	return this->playerBullets;
 }
 
-const int Game::GetBulletsInFlightCount(void) const {
-	return this->bulletsInFlightCount;
+std::vector<SpaceInvaders::Sprites::Bullet*>* Game::GetSaucerBullets(void) const {
+	return this->saucerBullets;
 }
 
-void Game::AddBulletsInFlight(int bulletCount) {
-	bulletsInFlightCount += bulletCount;
+const int Game::GetPlayerBulletsInFlightCount(void) const {
+	return this->playerBulletsInFlightCount;
+}
+
+const int Game::GetSaucerBulletsInFlightCount(void) const {
+	return this->saucerBulletsInFlightCount;
+}
+
+void Game::AddPlayerBulletsInFlight(int bulletCount) {
+	playerBulletsInFlightCount += bulletCount;
+}
+
+void Game::AddSaucerBulletsInFlight(int bulletCount) {
+	saucerBulletsInFlightCount += bulletCount;
+}
+
+void Game::RemovePlayerBulletsInFlight(int bulletCount) {
+	playerBulletsInFlightCount -= bulletCount;
+}
+
+void Game::RemoveSaucerBulletsInFlight(int bulletCount) {
+	saucerBulletsInFlightCount -= bulletCount;
 }
 
 std::vector<int>* Game::GetDeathCounters(void) {
 	return this->deathCounters;
 }
 
+void Game::AddScore(int scoreCount) {
+	score += scoreCount;
+	sprintf(
+		scoreBuffer,
+		"%i",
+		score
+	);
+	scoreValueText->SetText(scoreBuffer);
+}
+
 void Game::clearBuffer(uint32_t color) {
 	for (int i = 0; i < buffer->size.width() * buffer->size.height(); ++i) {
 		buffer->data[i] = color;
 	}
-}
-
-bool Game::getSpritesAreOverlaping(
-	SpaceInvaders::Sprite* spriteA,
-	SpaceInvaders::Sprite* spriteB
-)
-{
-	if (
-		(spriteA->GetPosition().x() < (spriteB->GetPosition().x() + spriteB->GetSize().width())) && ((spriteA->GetPosition().x() + spriteA->GetSize().width()) > spriteB->GetPosition().x()) &&
-		(spriteA->GetPosition().y() < (spriteB->GetPosition().y() + spriteB->GetSize().height())) && ((spriteA->GetPosition().y() + spriteA->GetSize().height()) > spriteB->GetPosition().y())
-	) {
-		return true;
-	}
-
-	return false;
 }

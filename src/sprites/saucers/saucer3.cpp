@@ -48,6 +48,7 @@ buffer2(new SpaceInvaders::SpriteBuffer())
 
 	setColor(Color::GetRGBToUInt32(154, 128, 205));
 	setDeathPoint(25);
+	setReloadDuration(50);
 }
 
 Saucer3::~Saucer3() {

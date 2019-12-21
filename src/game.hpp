@@ -10,15 +10,18 @@
 #include <sprites/saucer.hpp>
 #include <sprites/player.hpp>
 #include <sprites/bullets/sharp_bullet.hpp>
+#include <sprites/bullets/tri_bullet.hpp>
+#include <sprites/bullets/di_bullet.hpp>
 #include <sprites/bullet.hpp>
 #include <sprites/text.hpp>
 #include <controller.hpp>
 #include <controllers/saucer_controller.hpp>
 #include <controllers/player_controller.hpp>
+#include <controllers/bullet_controller.hpp>
 #include <sprite.hpp>
 #include <shaders.hpp>
 
-#define GAME_MAX_BULLETS_IN_FLIGHT 128
+#define GAME_MAX_BULLETS_IN_FLIGHT 80
 
 namespace SpaceInvaders {
 	using namespace SpaceInvaders::Sprites;
@@ -47,26 +50,31 @@ namespace SpaceInvaders {
 		void Cleanup(QOpenGLExtraFunctions* openGL);
 		void OnWheelEvent(QWheelEvent* wheelEvent);
 		void OnKeyEvent(QKeyEvent* keyEvent);
+		const Buffer* GetBuffer(void) const;
 		const std::vector<SpaceInvaders::Sprites::Saucer*>* GetSaucers(void) const;
 		SpaceInvaders::Sprites::Player* GetPlayer(void) const;
-		const std::vector<SpaceInvaders::Sprites::Bullet*>* GetPlayerBullets(void) const;
-		const int GetBulletsInFlightCount(void) const;
-		void AddBulletsInFlight(int bulletCount);
+		std::vector<SpaceInvaders::Sprites::Bullet*>* GetPlayerBullets(void) const;
+		std::vector<SpaceInvaders::Sprites::Bullet*>* GetSaucerBullets(void) const;
+		const int GetPlayerBulletsInFlightCount(void) const;
+		const int GetSaucerBulletsInFlightCount(void) const;
+		void AddPlayerBulletsInFlight(int bulletCount);
+		void AddSaucerBulletsInFlight(int bulletCount);
+		void RemovePlayerBulletsInFlight(int bulletCount);
+		void RemoveSaucerBulletsInFlight(int bulletCount);
 		std::vector<int>* GetDeathCounters(void);
+		void AddScore(int scoreCount);
 	private:
 		void clearBuffer(uint32_t color);
-		bool getSpritesAreOverlaping(
-			SpaceInvaders::Sprite* spriteA,
-			SpaceInvaders::Sprite* spriteB
-		);
 
 		QOpenGLShaderProgram* spriteShaderProgram;
 		std::vector<SpaceInvaders::Sprites::Saucer*>* saucers;
 		std::vector<SpaceInvaders::Sprites::Bullet*>* playerBullets;
+		std::vector<SpaceInvaders::Sprites::Bullet*>* saucerBullets;
 		SpaceInvaders::Sprites::Player* player;
 		SpaceInvaders::Sprites::Text* scoreText;
 		SpaceInvaders::Sprites::Text* scoreValueText;
-		int bulletsInFlightCount;
+		int playerBulletsInFlightCount;
+		int saucerBulletsInFlightCount;
 		std::vector<int>* deathCounters;
 		int spriteBufferLocation;
 		int score;

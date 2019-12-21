@@ -6,7 +6,11 @@ using namespace SpaceInvaders::Sprites;
 Saucer::Saucer() : Sprite(),
 	deathBuffer(new SpaceInvaders::SpriteBuffer()),
 	isDead(false),
-	deathPoint(10)
+	deathPoint(10),
+	isFiring(false),
+	isReloading(false),
+	reloadDuration(30),
+	reloadTime(0)
 {
 	deathBuffer->size.setWidth(13);
 	deathBuffer->size.setHeight(7);
@@ -58,6 +62,13 @@ void Saucer::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
 	if (animation.time >= (animation.frameCount * animation.frameDuration)) {
 		animation.time = 0;
 	}
+
+	if (reloadTime != 0) {
+		reloadTime -= 1;
+	}
+	else {
+		isReloading = false;
+	}
 }
 
 void Saucer::Die(void) {
@@ -78,8 +89,34 @@ bool Saucer::GetSpriteInFieldOfView(const SpaceInvaders::Sprite* sprite) {
 	return false;
 }
 
+void Saucer::Fire(void) {
+	if (!isReloading) {
+		isFiring = true;
+	}
+}
+
+void Saucer::Reload(void) {
+	isFiring = false;
+	isReloading = true;
+	reloadTime = reloadDuration;
+}
+
+bool Saucer::GetIsFiring(void) {
+	return isFiring;
+}
+
+bool Saucer::GetIsReloading(void) {
+	return isReloading;
+}
+
 void Saucer::setDeathPoint(int point) {
 	if (deathPoint != point) {
 		deathPoint = point;
+	}
+}
+
+void Saucer::setReloadDuration(int duration) {
+	if (reloadDuration != duration) {
+		reloadDuration = duration;
 	}
 }

@@ -8,7 +8,8 @@ Player::Player() : SpaceInvaders::Sprite(),
 	isFiring(false),
 	isReloading(false),
 	reloadDuration(10),
-	reloadTime(0)
+	reloadTime(0),
+	isDead(false)
 {
 	buffer->size.setWidth(11);
 	buffer->size.setHeight(7);
@@ -63,4 +64,12 @@ bool Player::GetIsFiring(void) {
 
 bool Player::GetIsReloading(void) {
 	return isReloading;
+}
+
+bool Player::GetIsDead(void) {
+	return isDead;
+}
+
+void Player::Die(void) {
+	isDead = true;
 }

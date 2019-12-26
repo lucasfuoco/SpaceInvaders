@@ -14,6 +14,8 @@ namespace SpaceInvaders {
 			void Reload(void);
 			bool GetIsFiring(void);
 			bool GetIsReloading(void);
+			bool GetIsDead(void);
+			void Die(void);
 		private:
 			SpaceInvaders::SpriteBuffer* buffer;
 			int lifeCount;
@@ -21,6 +23,7 @@ namespace SpaceInvaders {
 			int isReloading;
 			int reloadDuration;
 			int reloadTime;
+			bool isDead;
 		};
 	}
 }

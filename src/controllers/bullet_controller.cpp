@@ -52,23 +52,16 @@ void BulletController::Think(void) {
 			continue;
 		}
 
-		// Check if saucers are hit
-		/**for (int saucerIndex = 0; saucerIndex < game->GetSaucers()->size(); saucerIndex++) {
-			if (game->GetSaucers()->at(saucerIndex)->GetIsDead()) {
-				continue;
+		// Check if player is hit
+		if (!game->GetPlayer()->GetIsDead()) {
+			if (getSpritesAreOverlaping(game->GetSaucerBullets()->at(i), game->GetPlayer())) {
+				//game->GetPlayer()->Die();
+
+				game->GetSaucerBullets()->at(i)->ResetPosition();
+				std::rotate(game->GetSaucerBullets()->begin() + i, game->GetSaucerBullets()->begin() + i + 1, game->GetSaucerBullets()->end());
+				game->RemoveSaucerBulletsInFlight(1);
 			}
-
-			if (getSpritesAreOverlaping(game->GetPlayerBullets()->at(i), game->GetSaucers()->at(saucerIndex))) {
-				game->AddScore(game->GetSaucers()->at(saucerIndex)->GetDeathPoint());
-
-				game->GetSaucers()->at(saucerIndex)->Die();
-
-				game->GetPlayerBullets()->at(i)->ResetPosition();
-				std::rotate(game->GetPlayerBullets()->begin() + i, game->GetPlayerBullets()->begin() + i + 1, game->GetPlayerBullets()->end());
-				game->RemovePlayerBulletsInFlight(1);
-				continue;
-			}
-		}*/
+		}
 
 		i += 1;
 	}

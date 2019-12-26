@@ -41,7 +41,7 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 
 	animation.loop = true;
 	animation.frameCount = 2;
-	animation.frameDuration = 4;
+	animation.frameDuration = 8;
 	animation.time = 0;
 	animation.frames.push_back(buffer1);
 	animation.frames.push_back(buffer2);

@@ -87,7 +87,10 @@ int Saucer::GetDeathPoint(void) {
 }
 
 bool Saucer::GetSpriteInFieldOfView(const SpaceInvaders::Sprite* sprite) {
-	if (sprite->GetPosition().x() <= (position.x() + 2) && sprite->GetPosition().x() >= (position.x() - 2)) {
+	if (
+		sprite->GetPosition().x() <= (position.x() + (sprite->GetSize().width() / 2)) &&
+		sprite->GetPosition().x() >= (position.x() - (sprite->GetSize().width() / 2))
+	) {
 		return true;
 	}
 

@@ -7,24 +7,11 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 	buffer2(new SpaceInvaders::SpriteBuffer())
 {
 	buffer1->size.setWidth(3);
-	buffer1->size.setHeight(9);
-	buffer1->data = new uint8_t[27]
+	buffer1->size.setHeight(11);
+	buffer1->data = new uint8_t[33]
 	{
 		0,0,1, // ..@
 		0,1,0, // .@.
-		1,0,0, // @..
-		0,1,0, // .@.
-		0,0,1, // ..@
-		0,1,0, // .@.
-		1,0,0, // @..
-		0,1,0, // .@.
-		0,0,1  // ..@
-	};
-
-	buffer2->size.setWidth(3);
-	buffer2->size.setHeight(9);
-	buffer2->data = new uint8_t[27]
-	{
 		1,0,0, // @..
 		0,1,0, // .@.
 		0,0,1, // ..@
@@ -36,12 +23,29 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 		1,0,0  // @..
 	};
 
+	buffer2->size.setWidth(3);
+	buffer2->size.setHeight(11);
+	buffer2->data = new uint8_t[33]
+	{
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1, // ..@
+		0,1,0, // .@.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1, // ..@
+		0,1,0, // .@.
+		1,0,0, // @..
+		0,1,0, // .@.
+		0,0,1  // ..@
+	};
+
 	position.setX(1000);
 	position.setY(1000);
 
 	animation.loop = true;
 	animation.frameCount = 2;
-	animation.frameDuration = 8;
+	animation.frameDuration = 4;
 	animation.time = 0;
 	animation.frames.push_back(buffer1);
 	animation.frames.push_back(buffer2);

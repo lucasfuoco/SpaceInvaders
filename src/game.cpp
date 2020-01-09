@@ -52,7 +52,12 @@ Game::Game(Shaders* shaders) :
 	}
 
 	for (int i = 0; i < GAME_MAX_BULLETS_IN_FLIGHT; i++) {
-		saucerBullets->push_back(new SpaceInvaders::Sprites::Bullets::TriBullet());
+		if (i % 2 == 0) {
+			saucerBullets->push_back(new SpaceInvaders::Sprites::Bullets::DiBullet());
+		}
+		else {
+			saucerBullets->push_back(new SpaceInvaders::Sprites::Bullets::TriBullet());
+		}
 	}
 
 	for (int i = 0; i < saucers->size(); i++) {

@@ -19,7 +19,8 @@ Game::Game(Shaders* shaders) :
 	buffer(new Buffer()),
 	texture(),
 	vertex(),
-	controllers()
+	controllers(),
+	saucerMatrix(new QSize(11, 5))
 {
 	buffer->size.setWidth(224);
 	buffer->size.setHeight(256);
@@ -101,6 +102,7 @@ Game::~Game() {
 	delete playerBullets;
 	delete saucerBullets;
 	delete saucers;
+	delete saucerMatrix;
 }
 
 void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
@@ -281,6 +283,10 @@ void Game::AddScore(int scoreCount) {
 		score
 	);
 	scoreValueText->SetText(scoreBuffer);
+}
+
+const QSize* Game::GetSaucerMatrix(void) const {
+	return this->saucerMatrix;
 }
 
 void Game::clearBuffer(uint32_t color) {

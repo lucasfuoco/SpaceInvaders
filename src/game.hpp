@@ -63,6 +63,7 @@ namespace SpaceInvaders {
 		void RemoveSaucerBulletsInFlight(int bulletCount);
 		std::vector<int>* GetDeathCounters(void);
 		void AddScore(int scoreCount);
+		const QSize* GetSaucerMatrix(void) const;
 	private:
 		void clearBuffer(uint32_t color);
 
@@ -83,5 +84,6 @@ namespace SpaceInvaders {
 		GLuint texture;
 		GLuint vertex;
 		std::vector<SpaceInvaders::Controller*> controllers;
+		QSize* saucerMatrix;
 	};
 }

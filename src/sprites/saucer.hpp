@@ -3,6 +3,8 @@
 #include <sprite.hpp>
 
 namespace SpaceInvaders {
+	class Game;
+
 	namespace Sprites {
 		class Saucer : public SpaceInvaders::Sprite {
 		public:
@@ -18,6 +20,7 @@ namespace SpaceInvaders {
 			void Reload(void);
 			bool GetIsFiring(void);
 			bool GetIsReloading(void);
+			bool CanFire(SpaceInvaders::Game* game, int index);
 		protected:
 			void setDeathPoint(int point);
 			void setReloadDuration(int duration);

@@ -1,4 +1,5 @@
 #include <sprites/saucer.hpp>
+#include <game.hpp>
 
 using namespace SpaceInvaders;
 using namespace SpaceInvaders::Sprites;
@@ -111,6 +112,22 @@ bool Saucer::GetIsFiring(void) {
 
 bool Saucer::GetIsReloading(void) {
 	return isReloading;
+}
+
+bool Saucer::CanFire(SpaceInvaders::Game* game, int index) {
+	for (int s = (index - game->GetSaucerMatrix()->width()); s > 0;) {
+		if (!game->GetSaucers()->at(s)->GetIsDead()) {
+			return false;
+		}
+
+		s -= game->GetSaucerMatrix()->width();
+	}
+
+	if (isDead) {
+		return false;
+	}
+
+	return true;
 }
 
 void Saucer::setDeathPoint(int point) {

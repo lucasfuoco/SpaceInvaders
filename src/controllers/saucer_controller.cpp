@@ -18,7 +18,9 @@ void SaucerController::Think(void) {
 		}
 
 		if (game->GetSaucers()->at(i)->GetSpriteInFieldOfView(game->GetPlayer())) {
-			game->GetSaucers()->at(i)->Fire();
+			if (game->GetSaucers()->at(i)->CanFire(game, i)) {
+				game->GetSaucers()->at(i)->Fire();
+			}
 		}
 
 		if (game->GetSaucers()->at(i)->GetIsFiring() && (game->GetSaucerBulletsInFlightCount() < GAME_MAX_BULLETS_IN_FLIGHT)) {

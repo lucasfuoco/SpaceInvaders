@@ -53,7 +53,7 @@ Player::~Player() {
 
 void Player::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
 	if (isDead) {
-		setColor(Color::GetRGBToUInt32(219, 219, 219));
+		setColor(Color::GetRGBToUInt32(255, 227, 108));
 		setSpriteBuffer(deathBuffer);
 	}
 

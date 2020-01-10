@@ -16,14 +16,18 @@ namespace SpaceInvaders {
 			bool GetIsReloading(void);
 			bool GetIsDead(void);
 			void Die(void);
+			const int GetDeathFrameCount(void) const;
+			void DecrementDeathFrameCount(int frame);
 		private:
 			SpaceInvaders::SpriteBuffer* buffer;
+			SpaceInvaders::SpriteBuffer* deathBuffer;
 			int lifeCount;
 			int isFiring;
 			int isReloading;
 			int reloadDuration;
 			int reloadTime;
 			bool isDead;
+			int deathFrameCount;
 		};
 	}
 }

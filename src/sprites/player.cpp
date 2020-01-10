@@ -4,12 +4,14 @@ using namespace SpaceInvaders::Sprites;
 
 Player::Player() : SpaceInvaders::Sprite(),
 	buffer(new SpaceInvaders::SpriteBuffer()),
+	deathBuffer(new SpaceInvaders::SpriteBuffer()),
 	lifeCount(3),
 	isFiring(false),
 	isReloading(false),
 	reloadDuration(10),
 	reloadTime(0),
-	isDead(false)
+	isDead(false),
+	deathFrameCount(10)
 {
 	buffer->size.setWidth(11);
 	buffer->size.setHeight(7);
@@ -24,6 +26,19 @@ Player::Player() : SpaceInvaders::Sprite(),
 		1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
 	};
 
+	deathBuffer->size.setWidth(11);
+	deathBuffer->size.setHeight(7);
+	deathBuffer->data = new uint8_t[77]
+	{
+		0,1,0,1,0,0,0,1,0,1,0, // .@.@...@.@.
+		0,0,1,0,1,0,1,0,1,0,0, // ..@.@.@.@..
+		0,0,0,0,0,0,0,0,0,0,0, // ...........
+		1,1,0,0,0,0,0,0,0,1,1, // @@.......@@
+		0,0,0,0,0,0,0,0,0,0,0, // ...........
+		0,0,1,0,1,0,1,0,1,0,0, // ..@.@.@.@..
+		0,1,0,1,0,0,0,1,0,1,0, // .@.@...@.@.
+	};
+
 	position.setX(107);
 	position.setY(32);
 
@@ -32,18 +47,24 @@ Player::Player() : SpaceInvaders::Sprite(),
 }
 
 Player::~Player() {
+	delete deathBuffer;
 	delete buffer;
 }
 
 void Player::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
+	if (isDead) {
+		setColor(Color::GetRGBToUInt32(219, 219, 219));
+		setSpriteBuffer(deathBuffer);
+	}
+
+	drawSpriteBuffer(buffer, position.x(), position.y());
+
 	if (reloadTime != 0) {
 		reloadTime -= 1;
 	}
 	else {
 		isReloading = false;
 	}
-
-	SpaceInvaders::Sprite::UpdateSpriteBuffer(buffer);
 }
 
 void Player::Fire(void) {
@@ -72,4 +93,12 @@ bool Player::GetIsDead(void) {
 
 void Player::Die(void) {
 	isDead = true;
+}
+
+const int Player::GetDeathFrameCount(void) const {
+	return this->deathFrameCount;
+}
+
+void Player::DecrementDeathFrameCount(int frame) {
+	deathFrameCount -= frame;
 }

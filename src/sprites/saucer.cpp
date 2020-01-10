@@ -11,7 +11,8 @@ Saucer::Saucer() : Sprite(),
 	isFiring(false),
 	isReloading(false),
 	reloadDuration(30),
-	reloadTime(0)
+	reloadTime(0),
+	deathFrameCount(10)
 {
 	deathBuffer->size.setWidth(13);
 	deathBuffer->size.setHeight(7);
@@ -117,7 +118,7 @@ bool Saucer::GetIsReloading(void) {
 	return isReloading;
 }
 
-bool Saucer::CanFire(SpaceInvaders::Game* game, int index) {
+bool Saucer::GetCanFire(SpaceInvaders::Game* game, int index) {
 	for (int s = (index - game->GetSaucerMatrix()->width()); s > 0;) {
 		if (!game->GetSaucers()->at(s)->GetIsDead()) {
 			return false;
@@ -131,6 +132,14 @@ bool Saucer::CanFire(SpaceInvaders::Game* game, int index) {
 	}
 
 	return true;
+}
+
+const int Saucer::GetDeathFrameCount(void) const {
+	return this->deathFrameCount;
+}
+
+void Saucer::DecrementDeathFrameCount(int frame) {
+	deathFrameCount -= frame;
 }
 
 void Saucer::setDeathPoint(int point) {

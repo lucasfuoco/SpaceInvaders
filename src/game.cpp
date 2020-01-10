@@ -12,7 +12,6 @@ Game::Game(Shaders* shaders) :
 	scoreValueText(new SpaceInvaders::Sprites::Text()),
 	playerBulletsInFlightCount(0),
 	saucerBulletsInFlightCount(0),
-	deathCounters(new std::vector<int>()),
 	spriteBufferLocation(-1),
 	score(0),
 	scoreBuffer(),
@@ -60,10 +59,6 @@ Game::Game(Shaders* shaders) :
 		}
 	}
 
-	for (int i = 0; i < saucers->size(); i++) {
-		deathCounters->push_back(10);
-	}
-
 	scoreText->SetText("SCORE");
 	scoreText->SetX(4);
 	scoreText->SetY(buffer->size.height() - scoreText->GetSize().height() - 7);
@@ -99,7 +94,6 @@ Game::~Game() {
 		delete controllers[i];
 	}
 
-	delete deathCounters;
 	delete scoreValueText;
 	delete scoreText;
 	delete player;
@@ -122,11 +116,13 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	scoreValueText->UpdateSpriteBuffer(buffer);
 
 	// Player
-	player->UpdateSpriteBuffer(buffer);
+	if (player->GetDeathFrameCount() > 0) {
+		player->UpdateSpriteBuffer(buffer);
+	}
 
 	// Saucers
 	for (int i = 0; i < saucers->size(); i++) {
-		if (!deathCounters->at(i)) {
+		if (saucers->at(i)->GetDeathFrameCount() <= 0) {
 			continue;
 		}
 
@@ -274,10 +270,6 @@ void Game::RemovePlayerBulletsInFlight(int bulletCount) {
 
 void Game::RemoveSaucerBulletsInFlight(int bulletCount) {
 	saucerBulletsInFlightCount -= bulletCount;
-}
-
-std::vector<int>* Game::GetDeathCounters(void) {
-	return this->deathCounters;
 }
 
 void Game::AddScore(int scoreCount) {

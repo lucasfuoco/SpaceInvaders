@@ -20,7 +20,9 @@ namespace SpaceInvaders {
 			void Reload(void);
 			bool GetIsFiring(void);
 			bool GetIsReloading(void);
-			bool CanFire(SpaceInvaders::Game* game, int index);
+			bool GetCanFire(SpaceInvaders::Game* game, int index);
+			const int GetDeathFrameCount(void) const;
+			void DecrementDeathFrameCount(int frame);
 		protected:
 			void setDeathPoint(int point);
 			void setReloadDuration(int duration);
@@ -33,6 +35,7 @@ namespace SpaceInvaders {
 			int isReloading;
 			int reloadDuration;
 			int reloadTime;
+			int deathFrameCount;
 		};
 	}
 }

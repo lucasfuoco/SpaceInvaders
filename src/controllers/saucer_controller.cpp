@@ -13,12 +13,12 @@ SaucerController::~SaucerController() {
 
 void SaucerController::Think(void) {
 	for (int i = 0; i < game->GetSaucers()->size(); i++) {
-		if (game->GetSaucers()->at(i)->GetIsDead() && game->GetDeathCounters()->at(i)) {
-			game->GetDeathCounters()->at(i) -= 1;
+		if (game->GetSaucers()->at(i)->GetIsDead() && (game->GetSaucers()->at(i)->GetDeathFrameCount() > 0)) {
+			game->GetSaucers()->at(i)->DecrementDeathFrameCount(1);
 		}
 
-		if (game->GetSaucers()->at(i)->GetSpriteInFieldOfView(game->GetPlayer())) {
-			if (game->GetSaucers()->at(i)->CanFire(game, i)) {
+		if (!game->GetPlayer()->GetIsDead() && game->GetSaucers()->at(i)->GetSpriteInFieldOfView(game->GetPlayer())) {
+			if (game->GetSaucers()->at(i)->GetCanFire(game, i)) {
 				game->GetSaucers()->at(i)->Fire();
 			}
 		}

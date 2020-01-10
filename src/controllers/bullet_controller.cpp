@@ -55,7 +55,7 @@ void BulletController::Think(void) {
 		// Check if player is hit
 		if (!game->GetPlayer()->GetIsDead()) {
 			if (getSpritesAreOverlaping(game->GetSaucerBullets()->at(i), game->GetPlayer())) {
-				//game->GetPlayer()->Die();
+				game->GetPlayer()->Die();
 
 				game->GetSaucerBullets()->at(i)->ResetPosition();
 				std::rotate(game->GetSaucerBullets()->begin() + i, game->GetSaucerBullets()->begin() + i + 1, game->GetSaucerBullets()->end());

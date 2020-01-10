@@ -61,7 +61,6 @@ namespace SpaceInvaders {
 		void AddSaucerBulletsInFlight(int bulletCount);
 		void RemovePlayerBulletsInFlight(int bulletCount);
 		void RemoveSaucerBulletsInFlight(int bulletCount);
-		std::vector<int>* GetDeathCounters(void);
 		void AddScore(int scoreCount);
 		const QSize* GetSaucerMatrix(void) const;
 	private:
@@ -76,7 +75,6 @@ namespace SpaceInvaders {
 		SpaceInvaders::Sprites::Text* scoreValueText;
 		int playerBulletsInFlightCount;
 		int saucerBulletsInFlightCount;
-		std::vector<int>* deathCounters;
 		int spriteBufferLocation;
 		int score;
 		char scoreBuffer[4096];

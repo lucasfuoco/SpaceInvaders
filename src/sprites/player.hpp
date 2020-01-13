@@ -16,6 +16,7 @@ namespace SpaceInvaders {
 			bool GetIsReloading(void);
 			bool GetIsDead(void);
 			void Die(void);
+			void Respawn(void);
 			const int GetDeathFrameCount(void) const;
 			void DecrementDeathFrameCount(int frame);
 		private:

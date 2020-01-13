@@ -52,6 +52,11 @@ Player::~Player() {
 }
 
 void Player::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
+	if (deathFrameCount <= 0) {
+		Respawn();
+		return;
+	}
+
 	if (isDead) {
 		setColor(Color::GetRGBToUInt32(255, 229, 118));
 		setSpriteBuffer(deathBuffer);
@@ -93,6 +98,14 @@ bool Player::GetIsDead(void) {
 
 void Player::Die(void) {
 	isDead = true;
+}
+
+void Player::Respawn(void) {
+	isDead = false;
+	deathFrameCount = 10;
+	position.setX(107);
+	setColor(Color::GetRGBToUInt32(104, 157, 185));
+	setSpriteBuffer(buffer);
 }
 
 const int Player::GetDeathFrameCount(void) const {

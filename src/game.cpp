@@ -119,11 +119,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	player->UpdateSpriteBuffer(buffer);
 
 	// Saucers
-	for (int i = 0; i < saucers->size(); i++) {
-		if (saucers->at(i)->GetDeathFrameCount() <= 0) {
-			continue;
-		}
-
+	for (int i = 0; i < saucers->size(); i++) {	
 		saucers->at(i)->UpdateSpriteBuffer(buffer);
 	}
 

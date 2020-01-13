@@ -42,6 +42,10 @@ void Saucer::ClearData(void) {
 }
 
 void Saucer::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
+	if (deathFrameCount <= 0) {
+		return;
+	}
+
 	if (isDead) {
 		setColor(Color::GetRGBToUInt32(174, 0, 0));
 		setSpriteBuffer(deathBuffer);

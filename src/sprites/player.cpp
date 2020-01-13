@@ -80,7 +80,7 @@ void Player::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
 }
 
 void Player::Fire(void) {
-	if (!isReloading) {
+	if (!isReloading && !isDead) {
 		isFiring = true;
 	}
 }

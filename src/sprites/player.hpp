@@ -1,7 +1,8 @@
 #pragma once
-#include <iostream>
 #include <sprite.hpp>
 #include <color.hpp>
+#include <QtWidgets>
+#include <iostream>
 
 namespace SpaceInvaders {
 	namespace Sprites {
@@ -16,10 +17,12 @@ namespace SpaceInvaders {
 			bool GetIsReloading(void);
 			bool GetIsDead(void);
 			void Die(void);
-			void Respawn(void);
 			const int GetDeathFrameCount(void) const;
 			void DecrementDeathFrameCount(int frame);
+			void RequestRespawn(void);
 		private:
+			void respawn(void);
+
 			SpaceInvaders::SpriteBuffer* buffer;
 			SpaceInvaders::SpriteBuffer* deathBuffer;
 			int lifeCount;
@@ -29,6 +32,9 @@ namespace SpaceInvaders {
 			int reloadTime;
 			bool isDead;
 			int deathFrameCount;
+			int respawnTimeSeconds;
+			int respawnTime;
+			bool isRespawning;
 		};
 	}
 }

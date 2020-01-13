@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+#include <boost/asio.hpp>
 #include <vector>
 #include <QtWidgets>
 #include <color.hpp>
@@ -20,6 +20,7 @@
 #include <controllers/bullet_controller.hpp>
 #include <sprite.hpp>
 #include <shaders.hpp>
+#include <iostream>
 
 #define GAME_MAX_BULLETS_IN_FLIGHT 80
 

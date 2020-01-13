@@ -1,9 +1,9 @@
 #pragma once
-#include <iostream>
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <window.hpp>
+#include <iostream>
 
 namespace SpaceInvaders {
 	using namespace SpaceInvaders;

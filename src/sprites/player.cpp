@@ -1,4 +1,5 @@
 #include <sprites/player.hpp>
+#include <boost/bind.hpp>
 
 using namespace SpaceInvaders::Sprites;
 
@@ -11,7 +12,10 @@ Player::Player() : SpaceInvaders::Sprite(),
 	reloadDuration(10),
 	reloadTime(0),
 	isDead(false),
-	deathFrameCount(10)
+	deathFrameCount(10),
+	respawnTimeSeconds(3),
+	respawnTime(),
+	isRespawning()
 {
 	buffer->size.setWidth(11);
 	buffer->size.setHeight(7);
@@ -52,8 +56,11 @@ Player::~Player() {
 }
 
 void Player::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
+	if (isDead && (QTime(0, 0, 0).secsTo(QTime::currentTime()) >= respawnTime)) {
+		respawn();
+	}
+
 	if (deathFrameCount <= 0) {
-		Respawn();
 		return;
 	}
 
@@ -100,12 +107,21 @@ void Player::Die(void) {
 	isDead = true;
 }
 
-void Player::Respawn(void) {
+void Player::RequestRespawn(void) {
+	if (!isRespawning) {
+		respawnTime = QTime(0, 0, 0).secsTo(QTime::currentTime().addSecs(respawnTimeSeconds));
+		isRespawning = true;
+	}
+	
+}
+
+void Player::respawn(void) {
 	isDead = false;
 	deathFrameCount = 10;
 	position.setX(107);
 	setColor(Color::GetRGBToUInt32(104, 157, 185));
 	setSpriteBuffer(buffer);
+	isRespawning = false;
 }
 
 const int Player::GetDeathFrameCount(void) const {

@@ -1,7 +1,8 @@
 #pragma once
-#include <iostream>
+#include <boost/asio.hpp>
 #include <color.hpp>
 #include <QtWidgets>
+#include <iostream>
 
 namespace SpaceInvaders {
 	struct Buffer;

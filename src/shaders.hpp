@@ -1,7 +1,7 @@
 #pragma once
-#include <iostream>
 #include <QtWidgets>
 #include <array>
+#include <iostream>
 
 namespace SpaceInvaders {
 	class Shaders {

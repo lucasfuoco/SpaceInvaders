@@ -1,8 +1,8 @@
 #pragma once
-#include <iostream>
 #include <controller.hpp>
 #include <game.hpp>
 #include <sprite.hpp>
+#include <iostream>
 
 namespace SpaceInvaders {
 	namespace Controllers {

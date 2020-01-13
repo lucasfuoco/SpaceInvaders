@@ -1,8 +1,9 @@
 #pragma once
-#include <QtWidgets>
 #include <game.hpp>
 #include <shaders.hpp>
 #include <vector>
+#include <QtWidgets>
+#include <iostream>
 
 namespace SpaceInvaders {
 	using namespace SpaceInvaders;

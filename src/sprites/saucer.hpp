@@ -24,6 +24,8 @@ namespace SpaceInvaders {
 			bool GetCanFire(SpaceInvaders::Game* game, int index);
 			const int GetDeathFrameCount(void) const;
 			void DecrementDeathFrameCount(int frame);
+			bool CanMove(void);
+			void Move(void);
 		protected:
 			void setDeathPoint(int point);
 			void setReloadDuration(int duration);
@@ -32,11 +34,13 @@ namespace SpaceInvaders {
 		private:
 			bool isDead;
 			int deathPoint;
-			int isFiring;
-			int isReloading;
+			bool isFiring;
+			bool isReloading;
 			int reloadDuration;
 			int reloadTime;
 			int deathFrameCount;
+			int moveDuration;
+			int moveTime;
 		};
 	}
 }

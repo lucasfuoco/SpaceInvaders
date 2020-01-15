@@ -12,7 +12,9 @@ Saucer::Saucer() : Sprite(),
 	isReloading(false),
 	reloadDuration(30),
 	reloadTime(0),
-	deathFrameCount(10)
+	deathFrameCount(10),
+	moveDuration(100),
+	moveTime(0)
 {
 	deathBuffer->size.setWidth(13);
 	deathBuffer->size.setHeight(7);
@@ -74,6 +76,10 @@ void Saucer::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {
 	}
 	else {
 		isReloading = false;
+	}
+
+	if (moveTime != 0) {
+		moveTime -= 1;
 	}
 }
 
@@ -144,6 +150,14 @@ const int Saucer::GetDeathFrameCount(void) const {
 
 void Saucer::DecrementDeathFrameCount(int frame) {
 	deathFrameCount -= frame;
+}
+
+bool Saucer::CanMove(void) {
+	return moveTime <= 0;
+}
+
+void Saucer::Move(void) {
+	moveTime = moveDuration;
 }
 
 void Saucer::setDeathPoint(int point) {

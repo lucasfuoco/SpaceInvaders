@@ -31,6 +31,10 @@ void SaucerController::Think(void) {
 
 			game->GetSaucers()->at(i)->Reload();
 		}
+
+		if (game->GetSaucers()->at(i)->CanMove()) {
+			game->GetSaucers()->at(i)->Move();
+		}
 	}
 
 	SpaceInvaders::Controller::Think();

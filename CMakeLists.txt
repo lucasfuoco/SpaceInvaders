@@ -90,3 +90,12 @@ target_link_libraries(${SPACE_INVADERS} PUBLIC
 	${Qt5OpenGl_LIBRARIES}
 	${Boost_LIBRARIES}
 )
+
+set_property(
+	TARGET ${SPACE_INVADERS}
+	PROPERTY spaceinvaders_LIBRARIES ${SPACE_INVADERS_LIBRARIES}
+)
+set_property(
+	TARGET ${SPACE_INVADERS}
+	PROPERTY spaceinvaders_INCLUDE_DIRS ${SPACE_INVADERS_INCLUDE_DIR}
+)

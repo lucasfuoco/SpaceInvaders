@@ -10,7 +10,6 @@ Window::Window() :
 	isOpenGLFunctionsInitialized(false),
 	isOpenGLContextCreated(false)
 {
-	Q_INIT_RESOURCE(resources);
 	setSurfaceType(QOpenGLWindow::OpenGLSurface);
 }
 

@@ -1,5 +1,5 @@
-#include <sprites/saucer.hpp>
-#include <game.hpp>
+#include <spaceinvaders/sprites/saucer.hpp>
+#include <spaceinvaders/game.hpp>
 
 using namespace SpaceInvaders;
 using namespace SpaceInvaders::Sprites;

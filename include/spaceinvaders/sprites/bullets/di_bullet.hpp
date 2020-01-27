@@ -1,15 +1,15 @@
 #pragma once
 #include <iostream>
-#include <sprites/bullet.hpp>
-#include <color.hpp>
+#include <spaceinvaders/sprites/bullet.hpp>
+#include <spaceinvaders/color.hpp>
 
 namespace SpaceInvaders {
 	namespace Sprites {
 		namespace Bullets {
-			class TriBullet : public SpaceInvaders::Sprites::Bullet {
+			class DiBullet : public SpaceInvaders::Sprites::Bullet {
 			public:
-				TriBullet();
-				virtual ~TriBullet();
+				DiBullet();
+				virtual ~DiBullet();
 				virtual void ClearData(void) override;
 				virtual void UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) override;
 			private:

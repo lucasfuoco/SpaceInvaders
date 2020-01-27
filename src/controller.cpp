@@ -1,4 +1,4 @@
-#include <controller.hpp>
+#include <spaceinvaders/controller.hpp>
 
 using namespace SpaceInvaders;
 

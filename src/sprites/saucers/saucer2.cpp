@@ -1,4 +1,4 @@
-#include <sprites/saucers/saucer2.hpp>
+#include <spaceinvaders/sprites/saucers/saucer2.hpp>
 
 using namespace SpaceInvaders;
 using namespace SpaceInvaders::Sprites::Saucers;

@@ -1,6 +1,6 @@
 #pragma once
-#include <sprite.hpp>
-#include <color.hpp>
+#include <spaceinvaders/sprite.hpp>
+#include <spaceinvaders/color.hpp>
 #include <QtWidgets>
 #include <iostream>
 

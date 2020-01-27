@@ -1,4 +1,4 @@
-#include <application.hpp>
+#include <spaceinvaders/application.hpp>
 
 using namespace SpaceInvaders;
 

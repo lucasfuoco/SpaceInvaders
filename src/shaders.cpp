@@ -1,4 +1,4 @@
-#include <shaders.hpp>
+#include <spaceinvaders/shaders.hpp>
 
 using namespace SpaceInvaders;
 

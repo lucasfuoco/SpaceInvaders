@@ -1,6 +1,6 @@
 #pragma once
 #include <boost/asio.hpp>
-#include <sprite.hpp>
+#include <spaceinvaders/sprite.hpp>
 #include <iostream>
 
 namespace SpaceInvaders {

@@ -1,7 +1,7 @@
 #pragma once
-#include <controller.hpp>
-#include <game.hpp>
-#include <sprite.hpp>
+#include <spaceinvaders/controller.hpp>
+#include <spaceinvaders/game.hpp>
+#include <spaceinvaders/sprite.hpp>
 #include <iostream>
 
 namespace SpaceInvaders {

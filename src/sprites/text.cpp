@@ -1,4 +1,4 @@
-#include <sprites/text.hpp>
+#include <spaceinvaders/sprites/text.hpp>
 
 using namespace SpaceInvaders::Sprites;
 

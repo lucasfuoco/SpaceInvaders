@@ -1,5 +1,5 @@
-#include <sprite.hpp>
-#include <game.hpp>
+#include <spaceinvaders/sprite.hpp>
+#include <spaceinvaders/game.hpp>
 
 using namespace SpaceInvaders;
 

@@ -1,6 +1,6 @@
 #pragma once
-#include <game.hpp>
-#include <shaders.hpp>
+#include <spaceinvaders/game.hpp>
+#include <spaceinvaders/shaders.hpp>
 #include <vector>
 #include <QtWidgets>
 #include <iostream>

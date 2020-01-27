@@ -1,4 +1,4 @@
-#include <sprites/bullets/di_bullet.hpp>
+#include <spaceinvaders/sprites/bullets/di_bullet.hpp>
 
 using namespace SpaceInvaders::Sprites::Bullets;
 

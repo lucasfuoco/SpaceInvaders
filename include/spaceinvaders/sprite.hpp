@@ -1,6 +1,6 @@
 #pragma once
 #include <boost/asio.hpp>
-#include <color.hpp>
+#include <spaceinvaders/color.hpp>
 #include <QtWidgets>
 #include <iostream>
 

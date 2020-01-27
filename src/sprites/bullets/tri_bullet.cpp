@@ -1,4 +1,4 @@
-#include <sprites/bullets/tri_bullet.hpp>
+#include <spaceinvaders/sprites/bullets/tri_bullet.hpp>
 
 using namespace SpaceInvaders::Sprites::Bullets;
 

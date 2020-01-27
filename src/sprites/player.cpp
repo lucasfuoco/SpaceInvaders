@@ -1,4 +1,4 @@
-#include <sprites/player.hpp>
+#include <spaceinvaders/sprites/player.hpp>
 #include <boost/bind.hpp>
 
 using namespace SpaceInvaders::Sprites;

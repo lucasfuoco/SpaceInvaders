@@ -1,4 +1,4 @@
-#include <controllers/player_controller.hpp>
+#include <spaceinvaders/controllers/player_controller.hpp>
 
 using namespace SpaceInvaders::Controllers;
 

@@ -1,4 +1,4 @@
-#include <controllers/bullet_controller.hpp>
+#include <spaceinvaders/controllers/bullet_controller.hpp>
 
 using namespace SpaceInvaders::Controllers;
 

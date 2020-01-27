@@ -2,7 +2,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
-#include <window.hpp>
+#include <spaceinvaders/window.hpp>
 #include <iostream>
 
 namespace SpaceInvaders {

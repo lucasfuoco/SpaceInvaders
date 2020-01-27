@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include <sprites/bullet.hpp>
-#include <color.hpp>
+#include <spaceinvaders/sprites/bullet.hpp>
+#include <spaceinvaders/color.hpp>
 
 namespace SpaceInvaders {
 	namespace Sprites {

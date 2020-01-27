@@ -23,6 +23,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(SPACE_INVADERS_GAME_FOLDER ${CMAKE_SOURCE_DIR}/game)
+set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 
 # The following folder will be included
 include_directories(${PROJECT_SOURCE_DIR} ${EXECUTABLE_OUTPUT_PATH})
@@ -39,13 +40,20 @@ file(GLOB SOURCES
 	${PROJECT_SOURCE_DIR}/**/**/*.cpp
 )
 
+file(GLOB HEADERS
+	${PROJECT_INCLUDE_DIR}/*.hpp
+	${PROJECT_INCLUDE_DIR}/**/*.hpp
+	${PROJECT_INCLUDE_DIR}/**/**/*.hpp
+)
+
 QT5_ADD_RESOURCES(RESOURCES ${CMAKE_SOURCE_DIR}/resources.qrc)
 
 add_library(${SPACE_INVADERS_LIBRARIES} STATIC
 	${SOURCES}
 	${RESOURCES}
 )
-target_include_directories(${SPACE_INVADERS_LIBRARIES} PRIVATE
+target_include_directories(${SPACE_INVADERS_LIBRARIES} PUBLIC
+	${PROJECT_INCLUDE_DIR}
 	${Qt5Widgets_INCLUDE_DIRS}
 	${Qt5Svg_INCLUDE_DIRS}
 	${Qt5OpenGl_INCLUDE_DIRS}
@@ -53,14 +61,15 @@ target_include_directories(${SPACE_INVADERS_LIBRARIES} PRIVATE
 )
 
 add_executable(${SPACE_INVADERS} ${PROJECT_SOURCE_DIR}/main.cpp ${CMAKE_SOURCE_DIR}/resources.qrc)
-target_include_directories(${SPACE_INVADERS} PRIVATE
+target_include_directories(${SPACE_INVADERS} PUBLIC
+	${PROJECT_INCLUDE_DIR}
 	${Qt5Widgets_INCLUDE_DIRS}
 	${Qt5Svg_INCLUDE_DIRS}
 	${Qt5OpenGl_INCLUDE_DIRS}
 	${Boost_INCLUDE_DIR}
 )
 
-target_link_libraries(${SPACE_INVADERS} PRIVATE
+target_link_libraries(${SPACE_INVADERS} PUBLIC
 	${SPACE_INVADERS_LIBRARIES}
 	${Qt5Widgets_LIBRARIES}
 	${Qt5Svg_LIBRARIES}

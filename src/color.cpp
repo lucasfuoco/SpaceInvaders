@@ -1,4 +1,4 @@
-#include <color.hpp>
+#include <spaceinvaders/color.hpp>
 
 using namespace SpaceInvaders;
 

@@ -1,4 +1,4 @@
-#include <window.hpp>
+#include <spaceinvaders/window.hpp>
 
 using namespace SpaceInvaders;
 

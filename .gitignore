@@ -354,3 +354,8 @@ MigrationBackup/
 
 #CMake
 out/
+CMakeFiles/
+cmake_install.cmake
+libspaceinvaders-1.0.a
+qrc_spaceinvaders_resources.cpp
+spaceinvaders_resources.qrc.depends

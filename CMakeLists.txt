@@ -29,11 +29,75 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SPACE_INVADERS_BINARY_DIR})
 set(SPACE_INVADERS_GAME_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/game)
 set(SPACE_INVADERS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+# configuration options
+option(BUILD_EXECUTABLE "Build a executable." OFF)
+
 # The following folder will be included
 include_directories(${SPACE_INVADERS_SOURCE_DIR} ${SPACE_INVADERS_EXECUTABLE_OUTPUT_PATH})
 
-#qt
-find_package(Qt5 COMPONENTS Core Widgets Svg OpenGl REQUIRED)
+# set platform variable
+set(WINDOWS FALSE)
+set(LINUX FALSE)
+set(MACOSX FALSE)
+
+if(WIN32 AND NOT UNIX)
+	set(WINDOWS TRUE)
+elseif(UNIX AND NOT WIN32 AND NOT APPLE)
+	set(LINUX TRUE)
+elseif(APPLE AND UNIX)
+	set(MACOSX TRUE)
+else()
+	message(AUTHOR_WARNING "System is currently not supported explicitly. Assuming Linux.")
+	set(LINUX TRUE)
+endif()
+
+if (LINUX)
+	find_package(PkgConfig)
+	if (NOT PKG_CONFIG_FOUND)
+		message(FATAL_ERROR "The dependency \"pkg-config\" could not be resolved. Please make sure it is installed.")
+	endif()
+
+	#qt
+	list(APPEND QT5_INCLUDE_DIRS "")
+	list(APPEND QT5_LIBRARIES "")
+	find_package(Qt5Widgets REQUIRED)
+	find_package(Qt5Svg REQUIRED)
+	find_package(Qt5OpenGL REQUIRED)
+
+	pkg_search_module(QT5WIDGETS REQUIRED Qt5Widgets)
+	pkg_search_module(QT5SVG REQUIRED Qt5Svg)
+	pkg_search_module(QT5OPENGL REQUIRED Qt5OpenGL)
+
+	list(APPEND QT5_INCLUDE_DIRS
+		${QT5WIDGETS_INCLUDE_DIRS}
+		${QT5SVG_INCLUDE_DIRS}
+		${QT5OPENGL_INCLUDE_DIRS}
+	)
+	list(APPEND QT5_LIBRARIES
+		${QT5WIDGETS_LIBRARIES}
+		${QT5SVG_LIBRARIES}
+		${QT5OPENGL_LIBRARIES}
+	)
+endif()
+
+if (WINDOWS)
+	#qt
+	list(APPEND QT5_INCLUDE_DIRS "")
+	list(APPEND QT5_LIBRARIES "")
+	find_package(Qt5 COMPONENTS Core Widgets Svg OpenGl REQUIRED)
+	if (Qt5_FOUND)
+		list(APPEND QT5_INCLUDE_DIRS
+			${Qt5Widgets_INCLUDE_DIRS}
+			${Qt5Svg_INCLUDE_DIRS}
+			${Qt5OpenGl_INCLUDE_DIRS}
+		)
+		list(APPEND QT5_LIBRARIES
+			${Qt5Widgets_LIBRARIES}
+			${Qt5Svg_LIBRARIES}
+			${Qt5OpenGl_LIBRARIES}
+		)
+	endif()
+endif()
 
 #boost
 find_package(Boost REQUIRED COMPONENTS date_time filesystem system)
@@ -61,44 +125,39 @@ add_library(${SPACE_INVADERS_LIBRARIES} STATIC
 
 target_include_directories(${SPACE_INVADERS_LIBRARIES} PUBLIC
 	${SPACE_INVADERS_INCLUDE_DIR}
-	${Qt5Widgets_INCLUDE_DIRS}
-	${Qt5Svg_INCLUDE_DIRS}
-	${Qt5OpenGl_INCLUDE_DIRS}
+	${QT5_INCLUDE_DIRS}
 	${Boost_INCLUDE_DIR}
 )
 
 target_link_libraries(${SPACE_INVADERS_LIBRARIES} PUBLIC
-	${Qt5Widgets_LIBRARIES}
-	${Qt5Svg_LIBRARIES}
-	${Qt5OpenGl_LIBRARIES}
+	${QT5_LIBRARIES}
 	${Boost_LIBRARIES}
 )
 
-add_executable(${SPACE_INVADERS}
-	${SPACE_INVADERS_SOURCE_DIR}/main.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/spaceinvaders_resources.qrc
-)
-target_include_directories(${SPACE_INVADERS} PUBLIC
-	${SPACE_INVADERS_INCLUDE_DIR}
-	${Qt5Widgets_INCLUDE_DIRS}
-	${Qt5Svg_INCLUDE_DIRS}
-	${Qt5OpenGl_INCLUDE_DIRS}
-	${Boost_INCLUDE_DIR}
-)
+if (BUILD_EXECUTABLE)
+	add_executable(${SPACE_INVADERS}
+		${SPACE_INVADERS_SOURCE_DIR}/main.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/spaceinvaders_resources.qrc
+	)
 
-target_link_libraries(${SPACE_INVADERS} PUBLIC
-	${SPACE_INVADERS_LIBRARIES}
-	${Qt5Widgets_LIBRARIES}
-	${Qt5Svg_LIBRARIES}
-	${Qt5OpenGl_LIBRARIES}
-	${Boost_LIBRARIES}
-)
+	target_include_directories(${SPACE_INVADERS} PUBLIC
+		${SPACE_INVADERS_INCLUDE_DIR}
+		${QT5_INCLUDE_DIRS}
+		${Boost_INCLUDE_DIR}
+	)
+
+	target_link_libraries(${SPACE_INVADERS} PUBLIC
+		${SPACE_INVADERS_LIBRARIES}
+		${QT5_LIBRARIES}
+		${Boost_LIBRARIES}
+	)
+endif()
 
 set_property(
-	TARGET ${SPACE_INVADERS}
+	TARGET ${SPACE_INVADERS_LIBRARIES}
 	PROPERTY spaceinvaders_LIBRARIES ${SPACE_INVADERS_LIBRARIES}
 )
 set_property(
-	TARGET ${SPACE_INVADERS}
+	TARGET ${SPACE_INVADERS_LIBRARIES}
 	PROPERTY spaceinvaders_INCLUDE_DIRS ${SPACE_INVADERS_INCLUDE_DIR}
 )

@@ -29,6 +29,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SPACE_INVADERS_BINARY_DIR})
 set(SPACE_INVADERS_GAME_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/game)
 set(SPACE_INVADERS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fpic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpic")
+
 # configuration options
 option(BUILD_EXECUTABLE "Build a executable." OFF)
 
@@ -101,9 +105,8 @@ endif()
 
 #boost
 find_package(Boost REQUIRED COMPONENTS date_time filesystem system)
-# always
 find_package(Threads REQUIRED)
-# if using boost
+
 set(Boost_USE_MULTITHREADED ON)
 
 file(GLOB SPACE_INVADERS_SOURCES
@@ -138,25 +141,28 @@ target_link_libraries(${SPACE_INVADERS_LIBRARIES} PUBLIC
 	${Boost_LIBRARIES}
 )
 
-if (BUILD_EXECUTABLE)
-	add_executable(${SPACE_INVADERS}
+
+add_executable(${SPACE_INVADERS}
 		${SPACE_INVADERS_SOURCE_DIR}/main.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/spaceinvaders_resources.qrc
-	)
+)
 
-	target_include_directories(${SPACE_INVADERS} PUBLIC
-		${SPACE_INVADERS_INCLUDE_DIR}
-		${QT5_INCLUDE_DIRS}
-		${Boost_INCLUDE_DIR}
-	)
+set_property(TARGET ${SPACE_INVADERS} PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_compile_options(${SPACE_INVADERS} PRIVATE -fPIC)
+add_compile_options(-fPIC)
 
-	target_link_libraries(${SPACE_INVADERS} PUBLIC
-		${SPACE_INVADERS_LIBRARIES}
-		${QT5_LIBRARIES}
-		${Boost_LIBRARIES}
-		${CMAKE_THREAD_LIBS_INIT}
-	)
-endif()
+target_include_directories(${SPACE_INVADERS} PUBLIC
+	${SPACE_INVADERS_INCLUDE_DIR}
+	${QT5_INCLUDE_DIRS}
+	${Boost_INCLUDE_DIR}
+)
+
+target_link_libraries(${SPACE_INVADERS} PUBLIC
+	${SPACE_INVADERS_LIBRARIES}
+	${QT5_LIBRARIES}
+	${Boost_LIBRARIES}
+	${CMAKE_THREAD_LIBS_INIT}
+)
 
 set_property(
 	TARGET ${SPACE_INVADERS_LIBRARIES}

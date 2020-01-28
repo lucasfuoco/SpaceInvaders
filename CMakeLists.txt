@@ -101,6 +101,10 @@ endif()
 
 #boost
 find_package(Boost REQUIRED COMPONENTS date_time filesystem system)
+# always
+find_package(Threads REQUIRED)
+# if using boost
+set(Boost_USE_MULTITHREADED ON)
 
 file(GLOB SPACE_INVADERS_SOURCES
 	${SPACE_INVADERS_SOURCE_DIR}/*.cpp

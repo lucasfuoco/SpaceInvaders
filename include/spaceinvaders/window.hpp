@@ -24,6 +24,7 @@ namespace SpaceInvaders {
 
 		SpaceInvaders::Shaders* shaders;
 		QOpenGLContext* openGLContext;
+		QOffscreenSurface* offscreenSurface;
 		bool isOpenGLFunctionsInitialized;
 		bool isOpenGLContextCreated;
 		Game game;

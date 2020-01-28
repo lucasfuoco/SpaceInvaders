@@ -5,6 +5,7 @@ using namespace SpaceInvaders;
 Window::Window() :
 	QWindow(),
 	openGLContext(nullptr),
+	offscreenSurface(nullptr),
 	shaders(new SpaceInvaders::Shaders()),
 	game(shaders),
 	isOpenGLFunctionsInitialized(false),
@@ -19,6 +20,7 @@ Window::~Window() {
 	openGLContext->doneCurrent();
 
 	delete shaders;
+	delete offscreenSurface;
 	delete openGLContext;
 }
 
@@ -38,14 +40,12 @@ void Window::onGLInitialized(void) {
 void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLContextCreated) {
 		openGLContext = new QOpenGLContext(this);
-		QSurfaceFormat format;
-		format.setVersion(3, 1);
-		format.setProfile(QSurfaceFormat::CompatibilityProfile);
-		format.setDepthBufferSize(24);
-		format.setSamples(16);
-		format.setStencilBufferSize(8);
-		openGLContext->setFormat(format);
+		openGLContext->setFormat(QSurfaceFormat::defaultFormat());
 		openGLContext->create();
+
+		offscreenSurface = new QOffscreenSurface();
+		offscreenSurface->setFormat(openGLContext->format());
+		offscreenSurface->create();
 
 		isOpenGLContextCreated = true;
 	}

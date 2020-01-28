@@ -6,7 +6,7 @@
 namespace SpaceInvaders {
 	class Shaders {
 	public:
-		Shaders();
+		Shaders(QObject* parent);
 		virtual ~Shaders();
 		void LoadShaders(QOpenGLContext* context);
 

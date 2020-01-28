@@ -6,7 +6,7 @@ Window::Window() :
 	QWindow(),
 	openGLContext(nullptr),
 	offscreenSurface(nullptr),
-	shaders(new SpaceInvaders::Shaders()),
+	shaders(new SpaceInvaders::Shaders(this)),
 	game(shaders),
 	isOpenGLFunctionsInitialized(false),
 	isOpenGLContextCreated(false)

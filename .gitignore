@@ -359,3 +359,8 @@ cmake_install.cmake
 libspaceinvaders-1.0.a
 qrc_spaceinvaders_resources.cpp
 spaceinvaders_resources.qrc.depends
+*.ninja_deps
+*.ninja_log
+*CMakeCache.txt
+*build.ninja
+*rules.ninja

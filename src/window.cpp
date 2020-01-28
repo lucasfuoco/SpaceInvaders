@@ -40,7 +40,9 @@ void Window::onGLInitialized(void) {
 void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLContextCreated) {
 		openGLContext = new QOpenGLContext(this);
-		openGLContext->setFormat(QSurfaceFormat::defaultFormat());
+		QSurfaceFormat surfaceFormat = QSurfaceFormat::defaultFormat();
+		//surfaceFormat.setRenderableType(QSurfaceFormat::RenderableType::OpenGLES);
+		openGLContext->setFormat(surfaceFormat);
 		openGLContext->create();
 
 		offscreenSurface = new QOffscreenSurface();
@@ -50,7 +52,7 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 		isOpenGLContextCreated = true;
 	}
 
-	openGLContext->makeCurrent(this);
+	openGLContext->makeCurrent(offscreenSurface);
 
 	if (!isOpenGLFunctionsInitialized) {
 		initializeOpenGLFunctions();
@@ -60,7 +62,7 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 
 	glViewport(0, 0, width(), height());
 
-	openGLContext->swapBuffers(this);
+	openGLContext->swapBuffers(offscreenSurface);
 
 	mainLoop();
 }

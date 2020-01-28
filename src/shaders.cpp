@@ -9,9 +9,7 @@ Shaders::Shaders(QObject* parent) :
 }
 
 Shaders::~Shaders() {
-	if (spriteShaderProgram) {
-		delete spriteShaderProgram;
-	}
+	delete spriteShaderProgram;
 }
 
 void Shaders::LoadShaders(QOpenGLContext* context) {

@@ -72,7 +72,6 @@ if (LINUX)
 	#qt
 	list(APPEND QT5_INCLUDE_DIRS "")
 	list(APPEND QT5_LIBRARIES "")
-	find_package(Qt5Core REQUIRED)
 	find_package(Qt5Widgets REQUIRED)
 	find_package(Qt5Svg REQUIRED)
 	find_package(Qt5OpenGL REQUIRED)
@@ -132,7 +131,6 @@ file(GLOB SPACE_INVADERS_HEADERS
 	${SPACE_INVADERS_INCLUDE_DIR}/**/**/**/*.hpp
 )
 
-set(OE_QMAKE_PATH_EXTERNAL_HOST_BINS $ENV${QT_BIN_PATH})
 QT5_ADD_RESOURCES(SPACE_INVADERS_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/spaceinvaders_resources.qrc)
 
 add_library(${SPACE_INVADERS_LIBRARIES} STATIC

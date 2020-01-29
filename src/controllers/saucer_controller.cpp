@@ -2,9 +2,13 @@
 
 using namespace SpaceInvaders::Controllers;
 
-SaucerController::SaucerController(SpaceInvaders::Game* game) : SpaceInvaders::Controller(game)
+SaucerController::SaucerController(SpaceInvaders::Game* game) : SpaceInvaders::Controller(game),
+	saucerArea()
 {
-
+	saucerArea[0].setX(2);
+	saucerArea[0].setY(20);
+	saucerArea[1].setX(game->GetBuffer()->size.width() - 2);
+	saucerArea[1].setY(game->GetBuffer()->size.height());
 }
 
 SaucerController::~SaucerController() {
@@ -32,8 +36,18 @@ void SaucerController::Think(void) {
 			game->GetSaucers()->at(i)->Reload();
 		}
 
-		if (game->GetSaucers()->at(i)->CanMove()) {
-			game->GetSaucers()->at(i)->Move();
+		if (!game->GetSaucers()->at(i)->IsInArea(saucerArea) && !game->GetSaucers()->at(i)->GetIsDead()) {
+			if (game->GetSaucers()->at(i)->GetPosition().x() <= saucerArea[0].x()) {
+				// Move right
+			}
+
+			if (game->GetSaucers()->at(i)->GetPosition().x() >= saucerArea[1].x()) {
+				// Move left
+			}
+
+			if (game->GetSaucers()->at(i)->GetPosition().y() >= saucerArea[1].y()) {
+				// Move down
+			}
 		}
 	}
 

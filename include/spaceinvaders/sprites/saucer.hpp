@@ -2,6 +2,7 @@
 #include <boost/asio.hpp>
 #include <spaceinvaders/sprite.hpp>
 #include <iostream>
+#include <array>
 
 namespace SpaceInvaders {
 	class Game;
@@ -25,7 +26,8 @@ namespace SpaceInvaders {
 			const int GetDeathFrameCount(void) const;
 			void DecrementDeathFrameCount(int frame);
 			bool CanMove(void);
-			void Move(void);
+			bool IsInArea(std::array<QPoint, 2>& area);
+			void Move(const QPoint& pixels);
 		protected:
 			void setDeathPoint(int point);
 			void setReloadDuration(int duration);

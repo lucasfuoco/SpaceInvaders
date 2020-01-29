@@ -156,8 +156,27 @@ bool Saucer::CanMove(void) {
 	return moveTime <= 0;
 }
 
-void Saucer::Move(void) {
+bool Saucer::IsInArea(std::array<QPoint, 2>& area) {
+	if ((position.x() <= area[0].x()) && (position.y() <= area[0].y())) {
+		return false;
+	}
+	else {
+		return true;
+	}
+
+	if ((position.x() >= area[1].x()) && (position.y() >= area[1].y())) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+void Saucer::Move(const QPoint& pixels) {
 	moveTime = moveDuration;
+	
+	position.setX(position.x() + pixels.x());
+	position.setY(position.y() + pixels.y());
 }
 
 void Saucer::setDeathPoint(int point) {

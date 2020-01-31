@@ -6,7 +6,6 @@ Window::Window() :
 	QWindow(),
 	openGLContext(nullptr),
 	offscreenSurface(nullptr),
-	debugLogger(nullptr),
 	shaders(new SpaceInvaders::Shaders(this)),
 	game(shaders),
 	isOpenGLFunctionsInitialized(false),
@@ -18,12 +17,10 @@ Window::Window() :
 Window::~Window() {
 	openGLContext->makeCurrent(this);
 	game.Cleanup(this);
-	debugLogger->stopLogging();
 	openGLContext->doneCurrent();
 
 	delete shaders;
 	delete offscreenSurface;
-	delete debugLogger;
 	delete openGLContext;
 }
 
@@ -36,17 +33,6 @@ void Window::resizeEvent(QResizeEvent* resizeEvent) {
 }
 
 void Window::onGLInitialized(void) {
-	debugLogger = new QOpenGLDebugLogger(openGLContext);
-	debugLogger->initialize();
-
-	connect(
-		debugLogger,
-		&QOpenGLDebugLogger::messageLogged,
-		this,
-		&Window::onDebugMessageLogged
-	);
-	debugLogger->startLogging();
-
 	shaders->LoadShaders(openGLContext);
 	game.OnGLInitialized(this);
 }
@@ -58,12 +44,21 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 		QSurfaceFormat surfaceFormat;
 		surfaceFormat.setOption(QSurfaceFormat::DebugContext);
 		surfaceFormat.setVersion(3, 3);
+		surfaceFormat.setSamples(2);
 		surfaceFormat.setProfile(QSurfaceFormat::CoreProfile);
-
 		openGLContext->setFormat(surfaceFormat);
-		openGLContext->hasExtension(QByteArrayLiteral("GL_KHR_debug"));
-		openGLContext->create();
+		if (!openGLContext->create()) {
+			qWarning("Failed to create context!");
+			qDebug("Disabling multisampling ...");
 
+			surfaceFormat.setSamples(0);
+
+			if (!openGLContext->create()) {
+				qFatal("Can't create context!");
+				exit(0);
+			}
+		}
+		
 		offscreenSurface = new QOffscreenSurface();
 		offscreenSurface->setFormat(openGLContext->format());
 		offscreenSurface->create();
@@ -104,12 +99,6 @@ void Window::drawFrame(void) {
 
 void Window::keyPressEvent(QKeyEvent* keyEvent) {
 	game.OnKeyEvent(keyEvent);
-}
-
-void Window::onDebugMessageLogged(void) {
-	const QList<QOpenGLDebugMessage> messages = debugLogger->loggedMessages();
-	for (const QOpenGLDebugMessage& message : messages)
-		qDebug() << message;
 }
 
 void Window::mainLoop(void) {

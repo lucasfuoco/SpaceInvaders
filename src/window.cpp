@@ -41,22 +41,15 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLContextCreated) {
 		openGLContext = new QOpenGLContext(this);
 
-		QSurfaceFormat surfaceFormat;
+		QSurfaceFormat surfaceFormat = QSurfaceFormat::defaultFormat();
 		surfaceFormat.setOption(QSurfaceFormat::DebugContext);
 		surfaceFormat.setVersion(3, 3);
-		surfaceFormat.setSamples(2);
+		surfaceFormat.setSamples(0);
+		surfaceFormat.setDepthBufferSize(0);
 		surfaceFormat.setProfile(QSurfaceFormat::CoreProfile);
 		openGLContext->setFormat(surfaceFormat);
 		if (!openGLContext->create()) {
-			qWarning("Failed to create context!");
-			qDebug("Disabling multisampling ...");
-
-			surfaceFormat.setSamples(0);
-
-			if (!openGLContext->create()) {
-				qFatal("Can't create context!");
-				exit(0);
-			}
+			exit(0);
 		}
 		
 		offscreenSurface = new QOffscreenSurface();

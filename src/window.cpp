@@ -18,6 +18,7 @@ Window::Window() :
 Window::~Window() {
 	openGLContext->makeCurrent(this);
 	game.Cleanup(this);
+	debugLogger->stopLogging();
 	openGLContext->doneCurrent();
 
 	delete shaders;
@@ -35,6 +36,9 @@ void Window::resizeEvent(QResizeEvent* resizeEvent) {
 }
 
 void Window::onGLInitialized(void) {
+	debugLogger = new QOpenGLDebugLogger(openGLContext);
+	debugLogger->initialize();
+
 	connect(
 		debugLogger,
 		&QOpenGLDebugLogger::messageLogged,
@@ -55,9 +59,6 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 		surfaceFormat.setOption(QSurfaceFormat::DebugContext);
 		surfaceFormat.setVersion(3, 3);
 		surfaceFormat.setProfile(QSurfaceFormat::CoreProfile);
-
-		debugLogger = new QOpenGLDebugLogger(this);
-		debugLogger->initialize();
 
 		openGLContext->setFormat(surfaceFormat);
 		openGLContext->hasExtension(QByteArrayLiteral("GL_KHR_debug"));

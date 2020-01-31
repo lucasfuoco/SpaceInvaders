@@ -19,12 +19,14 @@ namespace SpaceInvaders {
 		virtual void keyPressEvent(QKeyEvent* keyEvent) override;
 		void onGLInitialized(void);
 		void drawFrame(void);
+		void onDebugMessageLogged(void);
 	private:
 		void mainLoop(void);
 
 		SpaceInvaders::Shaders* shaders;
 		QOpenGLContext* openGLContext;
 		QOffscreenSurface* offscreenSurface;
+		QOpenGLDebugLogger* debugLogger;
 		bool isOpenGLFunctionsInitialized;
 		bool isOpenGLContextCreated;
 		Game game;

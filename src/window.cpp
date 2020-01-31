@@ -6,6 +6,7 @@ Window::Window() :
 	QWindow(),
 	openGLContext(nullptr),
 	offscreenSurface(nullptr),
+	debugLogger(nullptr),
 	shaders(new SpaceInvaders::Shaders(this)),
 	game(shaders),
 	isOpenGLFunctionsInitialized(false),
@@ -21,6 +22,7 @@ Window::~Window() {
 
 	delete shaders;
 	delete offscreenSurface;
+	delete debugLogger;
 	delete openGLContext;
 }
 
@@ -33,6 +35,14 @@ void Window::resizeEvent(QResizeEvent* resizeEvent) {
 }
 
 void Window::onGLInitialized(void) {
+	connect(
+		debugLogger,
+		&QOpenGLDebugLogger::messageLogged,
+		this,
+		&Window::onDebugMessageLogged
+	);
+	debugLogger->startLogging();
+
 	shaders->LoadShaders(openGLContext);
 	game.OnGLInitialized(this);
 }
@@ -40,11 +50,17 @@ void Window::onGLInitialized(void) {
 void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLContextCreated) {
 		openGLContext = new QOpenGLContext(this);
+
 		QSurfaceFormat surfaceFormat;
 		surfaceFormat.setOption(QSurfaceFormat::DebugContext);
 		surfaceFormat.setVersion(3, 3);
 		surfaceFormat.setProfile(QSurfaceFormat::CoreProfile);
+
+		debugLogger = new QOpenGLDebugLogger(this);
+		debugLogger->initialize();
+
 		openGLContext->setFormat(surfaceFormat);
+		openGLContext->hasExtension(QByteArrayLiteral("GL_KHR_debug"));
 		openGLContext->create();
 
 		offscreenSurface = new QOffscreenSurface();
@@ -59,6 +75,7 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLFunctionsInitialized) {
 		initializeOpenGLFunctions();
 		onGLInitialized();
+
 		isOpenGLFunctionsInitialized = true;
 	}
 
@@ -86,6 +103,12 @@ void Window::drawFrame(void) {
 
 void Window::keyPressEvent(QKeyEvent* keyEvent) {
 	game.OnKeyEvent(keyEvent);
+}
+
+void Window::onDebugMessageLogged(void) {
+	const QList<QOpenGLDebugMessage> messages = debugLogger->loggedMessages();
+	for (const QOpenGLDebugMessage& message : messages)
+		qDebug() << message;
 }
 
 void Window::mainLoop(void) {

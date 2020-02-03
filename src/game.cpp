@@ -215,12 +215,8 @@ void Game::OnWheelEvent(QWheelEvent* wheelEvent) {
 }
 
 void Game::OnKeyEvent(QKeyEvent* keyEvent) {
-	switch (keyEvent->key()) {
-	case Qt::Key_Space:
+	if ((keyEvent->key() == Qt::Key_Space) || (keyEvent->key() == Qt::Key_Home)) {
 		player->Fire();
-		break;
-	default:
-		break;
 	}
 }
 

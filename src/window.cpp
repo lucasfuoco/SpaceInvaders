@@ -43,8 +43,8 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 
 		QSurfaceFormat surfaceFormat;
 		surfaceFormat.setVersion(3, 3);
-		surfaceFormat.setSamples(-1);
-		surfaceFormat.setDepthBufferSize(-1);
+		surfaceFormat.setSamples(0);
+		surfaceFormat.setSwapInterval(1);
 #ifdef __arm__
 		surfaceFormat.setRenderableType(QSurfaceFormat::OpenGLES);
 #endif

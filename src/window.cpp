@@ -42,7 +42,6 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 		openGLContext = new QOpenGLContext(this);
 
 		QSurfaceFormat surfaceFormat = requestedFormat();
-		surfaceFormat.setProfile(QSurfaceFormat::CoreProfile);
 		QSurfaceFormat::setDefaultFormat(surfaceFormat);
 		openGLContext->setFormat(surfaceFormat);
 

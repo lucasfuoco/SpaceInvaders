@@ -1,4 +1,4 @@
-#version 330 core
+#version 300 es
 noperspective out vec2 TexCoord;
 
 void main(void) {

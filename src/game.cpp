@@ -136,8 +136,8 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	openGL->glTexSubImage2D(
 		GL_TEXTURE_2D, 0, 0, 0,
 		buffer->size.width(), buffer->size.height(),
-		GL_RGBA,
-		GL_UNSIGNED_INT_8_8_8_8,
+		GL_ABGR_EXT,
+		GL_UNSIGNED_BYTE,
 		buffer->data
 	);
 
@@ -164,8 +164,8 @@ void Game::OnGLInitialized(QOpenGLExtraFunctions* openGL) {
 	openGL->glBindTexture(GL_TEXTURE_2D, texture);
 	openGL->glTexImage2D(
 		GL_TEXTURE_2D, 0, GL_RGBA8, buffer->size.width(), buffer->size.height(), 0,
-		GL_RGBA,
-		GL_UNSIGNED_INT_8_8_8_8,
+		GL_ABGR_EXT,
+		GL_UNSIGNED_BYTE,
 		buffer->data
 	);
 	openGL->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

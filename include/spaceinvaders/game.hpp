@@ -22,7 +22,7 @@
 #include <spaceinvaders/shaders.hpp>
 #include <iostream>
 
-#define GL_UNSIGNED_INT_8_8_8_8 0x8035
+#define GL_ABGR_EXT 0x8000
 #define GAME_MAX_BULLETS_IN_FLIGHT 80
 
 

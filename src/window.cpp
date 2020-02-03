@@ -42,7 +42,7 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 		openGLContext = new QOpenGLContext(this);
 		QOpenGLContext::openGLModuleType();
 
-		QSurfaceFormat surfaceFormat = QSurfaceFormat::defaultFormat();
+		QSurfaceFormat surfaceFormat;
 		surfaceFormat.setOption(QSurfaceFormat::DebugContext);
 		surfaceFormat.setVersion(3, 3);
 		surfaceFormat.setSamples(-1);
@@ -52,6 +52,13 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 #endif
 		surfaceFormat.setProfile(QSurfaceFormat::NoProfile);
 		openGLContext->setFormat(surfaceFormat);
+		if (!openGLContext->isOpenGLES()) {
+			std::cout << "Not OpenGLES!" << std::endl;
+		}
+		else {
+			std::cout << "Is OpenGLES!" << std::endl;
+		}
+
 		if (!openGLContext->create()) {
 			exit(0);
 		}

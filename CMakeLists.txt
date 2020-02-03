@@ -75,20 +75,24 @@ if (LINUX)
 	find_package(Qt5Widgets REQUIRED)
 	find_package(Qt5Svg REQUIRED)
 	find_package(Qt5OpenGL REQUIRED)
+	find_package(Qt5Gui REQUIRED)
 
 	pkg_search_module(QT5WIDGETS REQUIRED Qt5Widgets)
 	pkg_search_module(QT5SVG REQUIRED Qt5Svg)
 	pkg_search_module(QT5OPENGL REQUIRED Qt5OpenGL)
+	pkg_search_module(QT5GUI REQUIRED Qt5Gui)
 
 	list(APPEND QT5_INCLUDE_DIRS
 		${QT5WIDGETS_INCLUDE_DIRS}
 		${QT5SVG_INCLUDE_DIRS}
 		${QT5OPENGL_INCLUDE_DIRS}
+		${QT5GUI_INCLUDE_DIRS}
 	)
 	list(APPEND QT5_LIBRARIES
 		${QT5WIDGETS_LIBRARIES}
 		${QT5SVG_LIBRARIES}
 		${QT5OPENGL_LIBRARIES}
+		${QT5GUI_LIBRARIES}
 	)
 endif()
 
@@ -96,7 +100,7 @@ if (WINDOWS)
 	#qt
 	list(APPEND QT5_INCLUDE_DIRS "")
 	list(APPEND QT5_LIBRARIES "")
-	find_package(Qt5 COMPONENTS Core Widgets Svg OpenGl REQUIRED)
+	find_package(Qt5 COMPONENTS Core Widgets Svg OpenGl Gui REQUIRED)
 	if (Qt5_FOUND)
 		list(APPEND QT5_INCLUDE_DIRS
 			${Qt5Widgets_INCLUDE_DIRS}

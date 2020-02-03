@@ -1,5 +1,4 @@
 #include <spaceinvaders/game.hpp>
-#include <QtGui/qopenglext.h>
 
 using namespace SpaceInvaders;
 
@@ -137,7 +136,7 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 	openGL->glTexSubImage2D(
 		GL_TEXTURE_2D, 0, 0, 0,
 		buffer->size.width(), buffer->size.height(),
-		GL_ABGR_EXT,
+		GL_RGBA,
 		GL_UNSIGNED_BYTE,
 		buffer->data
 	);
@@ -165,7 +164,7 @@ void Game::OnGLInitialized(QOpenGLExtraFunctions* openGL) {
 	openGL->glBindTexture(GL_TEXTURE_2D, texture);
 	openGL->glTexImage2D(
 		GL_TEXTURE_2D, 0, GL_RGBA8, buffer->size.width(), buffer->size.height(), 0,
-		GL_ABGR_EXT,
+		GL_RGBA,
 		GL_UNSIGNED_BYTE,
 		buffer->data
 	);

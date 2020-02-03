@@ -1,4 +1,5 @@
 #include <spaceinvaders/game.hpp>
+#include <QtGui/qopenglext.h>
 
 using namespace SpaceInvaders;
 

@@ -2,6 +2,7 @@
 #include <boost/asio.hpp>
 #include <vector>
 #include <QtWidgets>
+#include <QtGui>
 #include <spaceinvaders/color.hpp>
 #include <spaceinvaders/sprites/saucers/saucer1.hpp>
 #include <spaceinvaders/sprites/saucers/saucer2.hpp>
@@ -20,7 +21,6 @@
 #include <spaceinvaders/controllers/bullet_controller.hpp>
 #include <spaceinvaders/sprite.hpp>
 #include <spaceinvaders/shaders.hpp>
-#include <qopenglext.h>
 #include <iostream>
 
 #define GAME_MAX_BULLETS_IN_FLIGHT 80

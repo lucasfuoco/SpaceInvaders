@@ -22,7 +22,9 @@
 #include <spaceinvaders/shaders.hpp>
 #include <iostream>
 
+#define GL_UNSIGNED_INT_8_8_8_8 0x8035
 #define GAME_MAX_BULLETS_IN_FLIGHT 80
+
 
 namespace SpaceInvaders {
 	using namespace SpaceInvaders::Sprites;

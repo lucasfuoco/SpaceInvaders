@@ -2,7 +2,7 @@
 #include <boost/asio.hpp>
 #include <vector>
 #include <QtWidgets>
-#include <QtGui/qopenglext.h>
+#include <GLES2/gl2.h>
 #include <spaceinvaders/color.hpp>
 #include <spaceinvaders/sprites/saucers/saucer1.hpp>
 #include <spaceinvaders/sprites/saucers/saucer2.hpp>

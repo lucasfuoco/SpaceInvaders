@@ -40,15 +40,8 @@ void Window::onGLInitialized(void) {
 void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLContextCreated) {
 		openGLContext = new QOpenGLContext(this);
-		if (openGLContext) {
-			std::cout << "Created instance of OpenGLContext!" << std::endl;
-		}
-		else {
-			std::cout << "Didn't create instance of OpenGLContext!" << std::endl;
-		}
 
 		QSurfaceFormat surfaceFormat;
-		surfaceFormat.setOption(QSurfaceFormat::DebugContext);
 		surfaceFormat.setVersion(3, 3);
 		surfaceFormat.setSamples(-1);
 		surfaceFormat.setDepthBufferSize(-1);
@@ -56,15 +49,11 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 		surfaceFormat.setRenderableType(QSurfaceFormat::OpenGLES);
 #endif
 		surfaceFormat.setProfile(QSurfaceFormat::NoProfile);
+		QSurfaceFormat::setDefaultFormat(surfaceFormat);
 		openGLContext->setFormat(surfaceFormat);
-		if (!openGLContext->isOpenGLES()) {
-			std::cout << "Not OpenGLES!" << std::endl;
-		}
-		else {
-			std::cout << "Is OpenGLES!" << std::endl;
-		}
-
+		
 		if (!openGLContext->create()) {
+			qFatal("Can't create OpenGL context!");
 			exit(0);
 		}
 		

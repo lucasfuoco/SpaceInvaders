@@ -16,6 +16,9 @@ Application::Application(int& argc, char** argv) : QApplication(argc, argv),
 	parser.addPositionalArgument("file", "The file to open.");
 	parser.process(*this);
 
+#ifdef __arm__
+	window.showFullScreen();
+#else
 	window.setGeometry(
 		QStyle::alignedRect(
 			Qt::LayoutDirection::LayoutDirectionAuto,
@@ -25,8 +28,8 @@ Application::Application(int& argc, char** argv) : QApplication(argc, argv),
 		)
 	);
 	window.setMinimumSize(QSize(1280, 800));
-	std::cout << "About to show window!" << std::endl;
 	window.show();
+#endif
 }
 
 Application::~Application() {

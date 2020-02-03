@@ -1,5 +1,5 @@
 #version 300 es
-highp out vec2 TexCoord;
+out highp vec2 TexCoord;
 
 void main(void) {
 	TexCoord.x = (gl_VertexID == 2) ? 2.0 : 0.0;

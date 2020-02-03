@@ -20,6 +20,7 @@
 #include <spaceinvaders/controllers/bullet_controller.hpp>
 #include <spaceinvaders/sprite.hpp>
 #include <spaceinvaders/shaders.hpp>
+#include <spaceinvaders/glext.hpp>
 #include <iostream>
 
 #define GAME_MAX_BULLETS_IN_FLIGHT 80

@@ -40,7 +40,12 @@ void Window::onGLInitialized(void) {
 void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLContextCreated) {
 		openGLContext = new QOpenGLContext(this);
-		QOpenGLContext::openGLModuleType();
+		if (openGLContext) {
+			std::cout << "Created instance of OpenGLContext!" << std::endl;
+		}
+		else {
+			std::cout << "Didn't create instance of OpenGLContext!" << std::endl;
+		}
 
 		QSurfaceFormat surfaceFormat;
 		surfaceFormat.setOption(QSurfaceFormat::DebugContext);

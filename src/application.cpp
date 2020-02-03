@@ -6,11 +6,6 @@ Application::Application(int& argc, char** argv) : QApplication(argc, argv) {
 	QCoreApplication::setOrganizationName("Ossiaco");
 	QCoreApplication::setApplicationName("SpaceInvaders");
 	QCoreApplication::setApplicationVersion(QT_VERSION_STR);
-#ifdef __arm__
-	QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#else
-	QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
-#endif
 	
 	QCommandLineParser parser;
 	parser.setApplicationDescription(QCoreApplication::applicationName());
@@ -28,6 +23,7 @@ Application::Application(int& argc, char** argv) : QApplication(argc, argv) {
 		)
 	);
 	window.setMinimumSize(QSize(1280, 800));
+	std::cout << "About to show window!" << std::endl;
 	window.show();
 }
 

@@ -40,6 +40,7 @@ void Window::onGLInitialized(void) {
 void Window::exposeEvent(QExposeEvent* exposeEvent) {
 	if (!isOpenGLContextCreated) {
 		openGLContext = new QOpenGLContext(this);
+		QOpenGLContext::openGLModuleType();
 
 		QSurfaceFormat surfaceFormat = QSurfaceFormat::defaultFormat();
 		surfaceFormat.setOption(QSurfaceFormat::DebugContext);

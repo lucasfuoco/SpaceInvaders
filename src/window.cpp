@@ -47,6 +47,9 @@ void Window::exposeEvent(QExposeEvent* exposeEvent) {
 		surfaceFormat.setVersion(3, 3);
 		surfaceFormat.setSamples(-1);
 		surfaceFormat.setDepthBufferSize(-1);
+#ifdef __arm__
+		surfaceFormat.setRenderableType(QSurfaceFormat::OpenGLES);
+#endif
 		surfaceFormat.setProfile(QSurfaceFormat::NoProfile);
 		openGLContext->setFormat(surfaceFormat);
 		if (!openGLContext->create()) {

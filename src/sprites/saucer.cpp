@@ -31,15 +31,14 @@ Saucer::Saucer() : Sprite(),
 }
 
 Saucer::~Saucer() {
-	delete deathBuffer;
-}
-
-void Saucer::ClearData(void) {
 	if (deathBuffer->data) {
 		delete[] deathBuffer->data;
 		deathBuffer->data = nullptr;
 	}
+	delete deathBuffer;
+}
 
+void Saucer::ClearData(void) {
 	Sprite::ClearData();
 }
 

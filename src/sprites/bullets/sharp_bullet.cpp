@@ -22,12 +22,14 @@ SharpBullet::SharpBullet() : SpaceInvaders::Sprites::Bullet(),
 }
 
 SharpBullet::~SharpBullet() {
-	delete buffer;
-}
-
-void SharpBullet::ClearData(void) {
 	if (buffer) {
 		delete[] buffer->data;
 		buffer->data = nullptr;
 	}
+	
+	delete buffer;
+}
+
+void SharpBullet::ClearData(void) {
+	Bullet::ClearData();
 }

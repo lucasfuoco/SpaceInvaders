@@ -10,6 +10,7 @@ namespace SpaceInvaders {
 		public:
 			Player();
 			virtual ~Player();
+			virtual void ClearData(void) override;
 			virtual void UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) override;
 			void Fire(void);
 			void Reload(void);

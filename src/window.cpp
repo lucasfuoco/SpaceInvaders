@@ -15,18 +15,22 @@ Window::Window() :
 }
 
 Window::~Window() {
-	openGLContext->makeCurrent(this);
-	game.Cleanup(this);
-	openGLContext->doneCurrent();
+	if (isOpenGLContextCreated) {
+		openGLContext->makeCurrent(this);
+		game.Cleanup(this);
+		openGLContext->doneCurrent();
+		delete openGLContext;
+		delete offscreenSurface;
+	}
 
 	delete shaders;
-	delete offscreenSurface;
-	delete openGLContext;
 }
 
 void Window::resizeEvent(QResizeEvent* resizeEvent) {
 	if (isOpenGLFunctionsInitialized && isExposed()) {
 		openGLContext->makeCurrent(this);
+		game.Cleanup(this);
+		game.OnGLInitialized(this);
 		glViewport(0, 0, width(), height());
 		openGLContext->swapBuffers(this);
 	}

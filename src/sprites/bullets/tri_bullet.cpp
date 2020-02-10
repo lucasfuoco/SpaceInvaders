@@ -54,11 +54,6 @@ TriBullet::TriBullet() : SpaceInvaders::Sprites::Bullet(),
 }
 
 TriBullet::~TriBullet() {
-	delete buffer1;
-	delete buffer2;
-}
-
-void TriBullet::ClearData(void) {
 	if (buffer1) {
 		delete[] buffer1->data;
 		buffer1->data = nullptr;
@@ -68,6 +63,13 @@ void TriBullet::ClearData(void) {
 		delete[] buffer2->data;
 		buffer2->data = nullptr;
 	}
+
+	delete buffer1;
+	delete buffer2;
+}
+
+void TriBullet::ClearData(void) {
+	Bullet::ClearData();
 }
 
 void TriBullet::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {

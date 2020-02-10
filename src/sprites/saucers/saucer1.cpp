@@ -52,11 +52,6 @@ Saucer1::Saucer1() : Sprites::Saucer(),
 }
 
 Saucer1::~Saucer1() {
-	delete buffer1;
-	delete buffer2;
-}
-
-void Saucer1::ClearData(void) {
 	if (buffer1->data) {
 		delete[] buffer1->data;
 		buffer1->data = nullptr;
@@ -67,5 +62,10 @@ void Saucer1::ClearData(void) {
 		buffer2->data = nullptr;
 	}
 
+	delete buffer1;
+	delete buffer2;
+}
+
+void Saucer1::ClearData(void) {
 	Saucer::ClearData();
 }

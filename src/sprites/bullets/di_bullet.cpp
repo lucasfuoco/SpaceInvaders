@@ -46,11 +46,6 @@ DiBullet::DiBullet() : SpaceInvaders::Sprites::Bullet(),
 }
 
 DiBullet::~DiBullet() {
-	delete buffer1;
-	delete buffer2;
-}
-
-void DiBullet::ClearData(void) {
 	if (buffer1) {
 		delete[] buffer1->data;
 		buffer1->data = nullptr;
@@ -60,6 +55,13 @@ void DiBullet::ClearData(void) {
 		delete[] buffer2->data;
 		buffer2->data = nullptr;
 	}
+	
+	delete buffer1;
+	delete buffer2;
+}
+
+void DiBullet::ClearData(void) {
+	Bullet::ClearData();
 }
 
 void DiBullet::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {

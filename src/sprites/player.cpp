@@ -51,8 +51,22 @@ Player::Player() : SpaceInvaders::Sprite(),
 }
 
 Player::~Player() {
+	if (buffer->data) {
+		delete[] buffer->data;
+		buffer->data = nullptr;
+	}
+
+	if (deathBuffer->data) {
+		delete[] deathBuffer->data;
+		deathBuffer->data = nullptr;
+	}
+	
 	delete deathBuffer;
 	delete buffer;
+}
+
+void Player::ClearData(void) {
+	SpaceInvaders::Sprite::ClearData();
 }
 
 void Player::UpdateSpriteBuffer(SpaceInvaders::Buffer* buffer) {

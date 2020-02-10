@@ -23,6 +23,7 @@ Game::Game(Shaders* shaders) :
 {
 	buffer->size.setWidth(224);
 	buffer->size.setHeight(256);
+	buffer->data = new uint32_t[buffer->size.width() * buffer->size.height()];
 
 	for (int yIndex = 0; yIndex < 5; ++yIndex) {
 		for (int xIndex = 0; xIndex < 11; ++xIndex) {
@@ -153,8 +154,6 @@ void Game::UpdateCommandBuffers(QOpenGLExtraFunctions* openGL) {
 
 void Game::OnGLInitialized(QOpenGLExtraFunctions* openGL) {
 	spriteBufferLocation = spriteShaderProgram->uniformLocation("buffer");
-	buffer->data = new uint32_t[buffer->size.width() * buffer->size.height()];
-
 	spriteShaderProgram->bind();
 	spriteShaderProgram->setUniformValue(spriteBufferLocation, 0);
 
@@ -196,9 +195,9 @@ void Game::Cleanup(QOpenGLExtraFunctions* openGL) {
 
 	openGL->glDeleteTextures(1, &texture);
 	openGL->glDeleteVertexArrays(1, &vertex);
-	scoreText->ClearData();
-	scoreValueText->ClearData();
-	buffer->ClearData();
+
+	scoreText->Cleanup(openGL);
+	scoreValueText->Cleanup(openGL);
 }
 
 void Game::OnWheelEvent(QWheelEvent* wheelEvent) {

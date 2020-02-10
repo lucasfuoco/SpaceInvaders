@@ -92,16 +92,15 @@ Text::Text() : SpaceInvaders::Sprite(),
 }
 
 Text::~Text() {
+    if (labelBuffer) {
+        delete[] labelBuffer->data;
+        labelBuffer->data = nullptr;
+    }
 	delete labelBuffer;
     delete spriteBuffer;
 }
 
 void Text::ClearData(void) {
-	if (labelBuffer) {
-		delete[] labelBuffer->data;
-		labelBuffer->data = nullptr;
-	}
-
 	SpaceInvaders::Sprite::ClearData();
 }
 
